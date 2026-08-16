@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, Truck } from 'lucide-react';
 import { Product, BrandType, CategoryType } from '../types';
 import { ProductCard } from '../components/ProductCard';
 
@@ -70,13 +70,24 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Page Header */}
-      <div className="border-b border-slate-200/80 pb-6">
-        <h1 className="text-3xl sm:text-4xl font-black text-[#002B5B] tracking-tight">
-          OUR PRODUCTS
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-3xl">
-          Browse our complete range of Sunshine Embroidery Machines, Shunfa Industrial Sewing Machines, Accessories, and High-Grade Threads.
-        </p>
+      <div className="border-b border-slate-200/80 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-3xl sm:text-4xl font-black text-[#002B5B] tracking-tight">
+            OUR PRODUCTS
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-3xl">
+            Browse our complete range of Sunshine Embroidery Machines, Shunfa Industrial Sewing Machines, Accessories, and High-Grade Threads.
+          </p>
+        </div>
+
+        {/* Transportation & Shipping Cost Banner */}
+        <div className="bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3.5 flex items-start space-x-3 shrink-0 max-w-md shadow-2xs">
+          <Truck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+          <div className="text-xs text-amber-950 leading-snug">
+            <span className="font-extrabold text-[#002B5B] block mb-0.5">Pan-India Delivery & Logistics</span>
+            Doorstep dispatch available nationwide across India. Transportation & freight charges are calculated separately according to destination distance & machine specifications.
+          </div>
+        </div>
       </div>
 
       {/* Filter and Search Bar Container */}

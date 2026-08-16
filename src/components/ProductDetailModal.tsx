@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, MessageSquare, PhoneCall, Download, FileText, CheckCircle2 } from 'lucide-react';
+import { X, MessageSquare, PhoneCall, Download, FileText, CheckCircle2, Truck } from 'lucide-react';
 import { Product, WebsiteSettings } from '../types';
 
 interface ProductDetailModalProps {
@@ -97,16 +97,27 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </p>
               </div>
 
-              {/* Price Box */}
-              <div className="bg-white/70 border border-slate-200/80 rounded-xl p-4 shadow-2xs backdrop-blur-xs">
-                <div className="text-xs text-slate-500 font-medium">Pricing Status</div>
-                <div className="text-lg font-extrabold text-[#002B5B] mt-0.5">
-                  {product.showPrice && product.price
-                    ? `₹${product.price.toLocaleString('en-IN')}`
-                    : 'Contact for latest price'}
+              {/* Price Box & Transportation Notice */}
+              <div className="bg-white/70 border border-slate-200/80 rounded-xl p-4 shadow-2xs backdrop-blur-xs space-y-2">
+                <div>
+                  <div className="text-xs text-slate-500 font-medium">Pricing Status</div>
+                  <div className="text-lg font-extrabold text-[#002B5B] mt-0.5">
+                    {product.showPrice && product.price
+                      ? `₹${product.price.toLocaleString('en-IN')}`
+                      : 'Contact for latest price'}
+                  </div>
+                  <div className="text-[11px] text-slate-500 mt-1">
+                    Includes 1-Year Warranty & Official Jayadeva Technical Support
+                  </div>
                 </div>
-                <div className="text-[11px] text-slate-500 mt-1">
-                  Includes 1-Year Warranty & Official Jayadeva Technical Support
+
+                {/* Transportation Note */}
+                <div className="pt-2.5 border-t border-slate-200/60 flex items-start space-x-2 text-xs text-slate-700 bg-amber-50/80 p-2.5 rounded-lg border border-amber-200/80">
+                  <Truck className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-extrabold text-[#002B5B]">Pan-India Delivery & Logistics:</span>{' '}
+                    Doorstep machine dispatch is available across all states in India. Transportation and freight charges are billed separately based on destination location and machine specifications.
+                  </div>
                 </div>
               </div>
 

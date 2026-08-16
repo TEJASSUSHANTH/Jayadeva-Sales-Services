@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2 } from 'lucide-react';
+import { X, Send, CheckCircle2, Truck } from 'lucide-react';
 import { Product } from '../types';
 import { submitEnquiry } from '../lib/api';
 
@@ -112,6 +112,14 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
                   </div>
                 </div>
               )}
+
+              {/* Transportation Note */}
+              <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl p-2.5 text-xs text-[#002B5B] flex items-start space-x-2">
+                <Truck className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-extrabold">Pan-India Shipping Notice:</span> Doorstep delivery available across all states in India. Transportation and freight charges are billed separately based on delivery location and machine requirements.
+                </div>
+              </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">

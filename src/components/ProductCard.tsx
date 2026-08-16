@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight, MessageSquare, Info } from 'lucide-react';
+import { ChevronRight, MessageSquare, Info, Truck } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -75,7 +75,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Pricing Notice */}
         <div className="pt-3 border-t border-slate-200/60 mt-2">
-          <div className="mb-3 text-xs">
+          <div className="mb-2 text-xs">
             {product.showPrice && product.price ? (
               <span className="text-lg font-extrabold text-[#002B5B]">
                 ₹{product.price.toLocaleString('en-IN')}
@@ -86,6 +86,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 <span>Price: Contact for latest quote</span>
               </div>
             )}
+          </div>
+
+          <div className="mb-3 text-[11px] text-amber-900 font-medium flex items-center space-x-1.5 bg-amber-50/90 px-2.5 py-1 rounded-lg border border-amber-200/80">
+            <Truck className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+            <span className="truncate">Pan-India Shipping Available (Transportation Extra)</span>
           </div>
 
           {/* Action Buttons */}

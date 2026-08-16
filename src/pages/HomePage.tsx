@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Wrench, Settings, ChevronRight, Award, Headphones, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Wrench, Settings, ChevronRight, Award, Headphones, CheckCircle2, Truck } from 'lucide-react';
 import { Product, WebsiteSettings } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { GoogleReviewsSection } from '../components/GoogleReviews';
@@ -29,9 +29,15 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Hero Text Column */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-amber-300 border border-white/20">
-                <Award className="w-4 h-4 text-[#FF6321]" />
-                <span>Authorized Sales & Technical Service Center</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-amber-300 border border-white/20">
+                  <Award className="w-4 h-4 text-[#FF6321]" />
+                  <span>Authorized Sales & Technical Service Center</span>
+                </div>
+                <div className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-amber-500/20 backdrop-blur-md rounded-full text-xs font-bold text-amber-200 border border-amber-400/30">
+                  <Truck className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Pan-India Delivery</span>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -67,10 +73,14 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
 
               {/* Key Trust Highlights */}
-              <div className="pt-6 grid grid-cols-3 gap-4 border-t border-white/15 text-xs text-slate-300">
+              <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/15 text-xs text-slate-300">
                 <div>
                   <div className="font-extrabold text-white text-sm">1-Year Warranty</div>
                   <div className="text-[11px] text-slate-300">On all new machines</div>
+                </div>
+                <div>
+                  <div className="font-extrabold text-white text-sm">Pan-India Delivery</div>
+                  <div className="text-[11px] text-slate-300">Freight & transport extra</div>
                 </div>
                 <div>
                   <div className="font-extrabold text-white text-sm">Genuine Spares</div>
@@ -231,14 +241,14 @@ export const HomePage: React.FC<HomePageProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/80 shadow-md space-y-3">
               <div className="w-11 h-11 bg-orange-100 text-[#FF6321] rounded-xl flex items-center justify-center font-bold">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h4 className="font-extrabold text-[#002B5B] text-sm">1-Year Warranty</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Official 1-year warranty coverage from date of installation with scheduled 6-month service intervals.
+                Official 1-year warranty coverage from date of installation with scheduled service support.
               </p>
             </div>
 
@@ -246,9 +256,19 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="w-11 h-11 bg-teal-100 text-[#008080] rounded-xl flex items-center justify-center font-bold">
                 <Wrench className="w-5 h-5" />
               </div>
-              <h4 className="font-extrabold text-[#002B5B] text-sm">Expert Installation</h4>
+              <h4 className="font-extrabold text-[#002B5B] text-sm">Expert On-Site Setup</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Certified technicians handle on-site machine leveling, initial setup, operator orientation, and stitch testing.
+                Certified technicians handle machine leveling, initial setup, operator orientation, and testing.
+              </p>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/80 shadow-md space-y-3">
+              <div className="w-11 h-11 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center font-bold">
+                <Truck className="w-5 h-5" />
+              </div>
+              <h4 className="font-extrabold text-[#002B5B] text-sm">Pan-India Logistics & Delivery</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Safe doorstep shipping across all states in India. Transportation and freight charges are billed separately based on location distance and machine specifications.
               </p>
             </div>
 
@@ -262,13 +282,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/80 shadow-md space-y-3">
+            <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/80 shadow-md space-y-3 sm:col-span-2 lg:col-span-2">
               <div className="w-11 h-11 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center font-bold">
                 <Headphones className="w-5 h-5" />
               </div>
               <h4 className="font-extrabold text-[#002B5B] text-sm">Prompt Technical Support</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Dedicated local telephone & WhatsApp support to resolve machine maintenance queries without delay.
+                Dedicated telephone & WhatsApp support to resolve machine maintenance and operational queries without delay.
               </p>
             </div>
           </div>

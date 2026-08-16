@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingBag, Wrench, ShieldCheck, CheckCircle2, Clock, Phone, FileText } from 'lucide-react';
+import { ShoppingBag, Wrench, ShieldCheck, CheckCircle2, Clock, Phone, FileText, Truck } from 'lucide-react';
 import { WebsiteSettings } from '../types';
 
 interface ServicesPageProps {
@@ -97,7 +97,32 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ settings, onRequestQ
           </ul>
         </div>
 
-        {/* Service 4: WARRANTY SUPPORT */}
+        {/* Service 4: TRANSPORTATION & SHIPPING */}
+        <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/80 p-6 sm:p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all space-y-4">
+          <div className="w-12 h-12 bg-amber-100/80 text-amber-800 rounded-2xl flex items-center justify-center font-bold">
+            <Truck className="w-6 h-6" />
+          </div>
+          <h2 className="text-2xl font-extrabold text-[#002B5B]">TRANSPORTATION & SHIPPING</h2>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Machine packing, logistics dispatch, and doorstep transport coordination according to your location needs and machine weight/size requirements.
+          </p>
+          <ul className="space-y-2.5 text-xs text-slate-700">
+            <li className="flex items-center space-x-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Transportation & shipping charges calculated extra based on destination distance</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Vehicle selection based on single-head, multi-head, or batch machine requirements</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Safe wooden crate packing & transit handling for embroidery & sewing units</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Service 5: WARRANTY SUPPORT */}
         <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/80 p-6 sm:p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all space-y-4">
           <div className="w-12 h-12 bg-purple-100/80 text-purple-700 rounded-2xl flex items-center justify-center font-bold">
             <ShieldCheck className="w-6 h-6" />
