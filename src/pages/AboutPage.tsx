@@ -1,6 +1,7 @@
 import React from 'react';
 import { Award, ShieldCheck, Wrench, CheckCircle2 } from 'lucide-react';
 import { WebsiteSettings } from '../types';
+import { GoogleReviewsSection } from '../components/GoogleReviews';
 
 interface AboutPageProps {
   settings: WebsiteSettings;
@@ -102,6 +103,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, onNavigate }) =>
           </div>
         </div>
       </div>
+
+      {/* GOOGLE REVIEWS */}
+      <GoogleReviewsSection />
 
       {/* CTA Line */}
       <div className="text-center space-y-4 pt-4">

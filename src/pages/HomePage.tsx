@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, ShieldCheck, Wrench, Settings, ChevronRight, Award, Headphones, CheckCircle2 } from 'lucide-react';
 import { Product, WebsiteSettings } from '../types';
 import { ProductCard } from '../components/ProductCard';
+import { GoogleReviewsSection } from '../components/GoogleReviews';
 
 interface HomePageProps {
   products: Product[];
@@ -273,6 +274,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </section>
+
+      {/* GOOGLE REVIEWS SECTION */}
+      <GoogleReviewsSection />
 
       {/* CTA QUOTE BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
