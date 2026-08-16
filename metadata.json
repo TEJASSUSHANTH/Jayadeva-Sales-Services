@@ -1,0 +1,6 @@
+{
+  "name": "Jayadeva Sales & Services",
+  "description": "Official website for Jayadeva Sales & Services - Sunshine Embroidery Machines & Shunfa Industrial Sewing Machines sales and support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

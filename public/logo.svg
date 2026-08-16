@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <!-- Golden Lotus Petals in Warm Gold (#C89327 / #D4A02A) -->
+  <g stroke="#C9942A" stroke-width="7.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Center Top Petal -->
+    <path d="M 250 25 C 205 85 195 175 250 270 C 305 175 295 85 250 25 Z" />
+    
+    <!-- Upper Left Petal -->
+    <path d="M 250 270 C 210 185 155 110 105 78 C 140 122 195 205 250 270 Z" />
+    <!-- Upper Right Petal -->
+    <path d="M 250 270 C 290 185 345 110 395 78 C 360 122 305 205 250 270 Z" />
+    
+    <!-- Middle Outer Left Petal -->
+    <path d="M 250 270 C 180 220 95 160 30 188 C 80 202 165 245 250 270 Z" />
+    <!-- Middle Outer Right Petal -->
+    <path d="M 250 270 C 320 220 405 160 470 188 C 420 202 335 245 250 270 Z" />
+
+    <!-- Bottom Sweeping Left Base Petal -->
+    <path d="M 250 270 C 150 282 70 262 35 212 C 85 208 175 238 250 270 Z" />
+    <!-- Bottom Sweeping Right Base Petal -->
+    <path d="M 250 270 C 350 282 430 262 465 212 C 415 208 325 238 250 270 Z" />
+  </g>
+
+  <!-- Monogram JD in Deep Blue-Teal (#004558) in Center -->
+  <g fill="#004558">
+    <!-- J Letter -->
+    <path d="M 165 142 H 236 V 160 H 212 V 238 C 212 262 198 282 174 282 C 151 282 136 266 136 248 C 136 235 146 226 158 226 C 166 226 172 231 175 238 C 178 245 185 256 197 256 C 206 256 212 248 212 234 V 160 H 165 Z" />
+    <!-- D Letter -->
+    <path d="M 222 142 H 268 C 308 142 338 168 338 211 C 338 254 308 280 268 280 H 222 Z M 245 160 V 262 H 266 C 295 262 314 243 314 211 C 314 179 295 160 266 160 Z" />
+  </g>
+</svg>

@@ -1,0 +1,447 @@
+import { Product, WebsiteSettings, Enquiry } from '../types';
+
+export const initialSettings: WebsiteSettings = {
+  companyName: 'JAYADEVA SALES & SERVICES',
+  tagline: 'Sales and Service of Sunshine Embroidery Machines & Shunfa Industrial Sewing Machines',
+  logoUrl: '/logo.svg',
+  phone1: '+91 93434 78096',
+  phone2: '+91 80 2670 9876',
+  whatsAppNumber: '919343478096',
+  email: 'sales@jayadevaservices.com',
+  address: '#42, 1st Main, Industrial Suburb, Rajajinagar 2nd Stage',
+  city: 'Bengaluru',
+  state: 'Karnataka',
+  pincode: '560010',
+  workingHours: 'Monday – Saturday: 9:00 AM – 7:00 PM',
+  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.653493721342!2d77.545198!3d12.993952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU5JzM4LjIiTiA3N8KwMzInNDIuNyJF!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin',
+  generalBrochureUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+};
+
+export const initialProducts: Product[] = [
+  {
+    id: 'prod-sun-1202-pro',
+    brand: 'Sunshine',
+    category: 'Embroidery Machines',
+    name: 'Sunshine Pro High Speed Multi-Head Embroidery Machine',
+    model: 'SUN-1202 Pro',
+    description: 'Heavy-duty high speed multi-head computer embroidery machine engineered for precise motif work, garments, sarees, caps, and badges with Dahao smart touch computer control.',
+    specifications: {
+      'Number of Heads': '2 Heads (Expandable to 4/6/12)',
+      'Needles per Head': '12 Needles',
+      'Max Speed': '1200 RPM',
+      'Embroidery Area': '400 x 450 mm',
+      'Control System': 'Dahao 10.1" True Color LCD Touchscreen',
+      'Thread Trimming': 'Automatic Thread Trimmer & Thread Break Sensor',
+      'Memory Capacity': '100,000,000 stitches (100 designs)',
+      'Motor': 'Servo Motor for Main Drive and Pantograph',
+      'Hook Type': 'Koban Original High Speed Rotary Hook (Japan)'
+    },
+    features: [
+      'High-precision linear guide rail for smooth pantograph frame movement',
+      'Automatic color change and top/bottom thread breakage detection',
+      'Integrated cap & garment embroidery attachment kit',
+      'Emergency stop button with auto stitch restoration after power cut',
+      'Heavy-duty vibration damping steel frame structure'
+    ],
+    applications: [
+      'Garment embroidery',
+      'Saree & Dupatta borders',
+      'Corporate uniforms & Badges',
+      'Cap & Hat embroidery',
+      'Bags and leather patches'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80'
+    ],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-sun-fu-904',
+    brand: 'Sunshine',
+    category: 'Embroidery Machines',
+    name: 'Sunshine FU Type Compact Embroidery Machine',
+    model: 'SUN-FU-904',
+    description: 'Specialized FU type structure embroidery machine providing high stability for heavy fabrics, thick threads, and intricate sequin/beading work.',
+    specifications: {
+      'Structure Type': 'FU Reinforced Steel Structure',
+      'Number of Heads': '4 Heads',
+      'Needles per Head': '9 Needles',
+      'Max Speed': '1000 RPM',
+      'Embroidery Area': '400 x 680 mm',
+      'Power Supply': 'AC 220V Single Phase 50/60Hz',
+      'Sequin/Cording': 'Optional Sequin & Cording Device Mount'
+    },
+    features: [
+      'FU Type extra rigid chassis prevents frame flex during high speed runs',
+      'Specialized thread tensioners for metallic and rayon threads',
+      'Automatic bobbin winder integrated on head assembly',
+      'Supports DST, DSB, EXP design file formats'
+    ],
+    applications: [
+      'Designer sarees and ethnic wear',
+      'Heavy curtains and home furnishings',
+      'Traditional dress materials',
+      'Sequin and glitter embroidery'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-sun-1506-lf',
+    brand: 'Sunshine',
+    category: 'Embroidery Machines',
+    name: 'Sunshine Large Frame Flat Embroidery Machine',
+    model: 'SUN-1506-LF',
+    description: 'Expansive large frame flat computer embroidery machine designed for continuous fabric rolls, large bedsheets, curtains, and high volume manufacturing.',
+    specifications: {
+      'Number of Heads': '6 Heads',
+      'Needles per Head': '15 Needles',
+      'Embroidery Area': '500 x 1200 mm (Large Frame)',
+      'Max Speed': '1100 RPM',
+      'Pantograph': 'Heavy-duty double guide beam pantograph',
+      'Lubrication': 'Semi-automatic centralized lubrication system'
+    },
+    features: [
+      'Extra large embroidery field ideal for continuous panel embroidery',
+      'Double noise-reduction cover casing',
+      'Auto-trimming and auto-color change',
+      'Dahao computer system with network USB input'
+    ],
+    applications: [
+      'Bed linen and bedsheets',
+      'Curtains and upholstery panels',
+      'Hotel linen embroidery',
+      'Large banners and flags'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-sun-bf-1201',
+    brand: 'Sunshine',
+    category: 'Embroidery Machines',
+    name: 'Sunshine Butterfly Model Single Head Embroidery Machine',
+    model: 'SUN-BF-1201',
+    description: 'Compact, portable single-head 12-needle embroidery machine engineered for boutiques, custom tailor shops, cap embroidery, and small batch production.',
+    specifications: {
+      'Heads': '1 Head',
+      'Needles': '12 Needles',
+      'Max Speed': '1200 RPM',
+      'Embroidery Area': '360 x 510 mm',
+      'Cap Frame Angle': '270 Wide Cap Driver',
+      'Weight': '95 kg (Compact & Portable)'
+    },
+    features: [
+      'User-friendly touch screen with real-time stitch tracking',
+      'Includes cap frame driver, 2 cap rings, and 5 garment hoop sizes',
+      'Built-in LED sewing lamp with brightness adjustment',
+      'Quiet direct drive servo motor system'
+    ],
+    applications: [
+      'Boutiques and custom tailoring shops',
+      'Custom cap & hat embroidery',
+      'Polo shirts & t-shirt logos',
+      'Name tags and personalized gifts'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-shunfa-s310',
+    brand: 'Shunfa',
+    category: 'Lockstitch',
+    name: 'Shunfa Direct Drive Computerized Lockstitch Machine',
+    model: 'S310',
+    description: 'High performance direct drive computerized single needle lockstitch machine featuring integrated control panel, energy saving motor, and automatic thread trimming.',
+    specifications: {
+      'Stitch Type': 'Single Needle Lockstitch (ISO 301)',
+      'Max Sewing Speed': '5000 stitches/min',
+      'Max Stitch Length': '5 mm',
+      'Needle Type': 'DBx1 #9 to #18',
+      'Presser Foot Lift': '5.5 mm by hand / 13 mm by knee',
+      'Motor': 'Integrated Direct Drive AC Servo Motor 550W',
+      'Oil System': 'Automatic Vane Pump Lubrication'
+    },
+    features: [
+      'Saves up to 70% electricity compared to clutch motor machines',
+      'Built-in needle positioner (UP/DOWN stop setting)',
+      'Integrated LED lamp with 3-level intensity control',
+      'Smooth needle bar stroke for flawless stitch quality on light to medium fabrics'
+    ],
+    applications: [
+      'Shirts, trousers, blouses',
+      'Light knitwear and woven garments',
+      'Innerwear and uniforms'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-shunfa-s320',
+    brand: 'Shunfa',
+    category: 'Lockstitch',
+    name: 'Shunfa Advanced Lockstitch Machine with Voice Prompt',
+    model: 'S320',
+    description: 'Smart computerized lockstitch machine equipped with voice assistance, automatic backtacking, auto foot lifter, and sealed oil reservoir.',
+    specifications: {
+      'Max Speed': '5000 RPM',
+      'Stitch Length': '0 - 5 mm',
+      'Thread Trimming': 'Auto Trimmer with Double Rotating Knives',
+      'Auto Backtack': 'Solenoid Controlled Auto Reverse Sewing',
+      'Voice Assistant': 'Multilingual Voice Guidance System'
+    },
+    features: [
+      'Voice guidance alerts operator for parameter adjustments and bobbin status',
+      'Short thread remaining tail (<3mm) after automatic trimming',
+      'Sealed oil pan prevents fabric oil staining',
+      'Electronic thread tension control for consistent seam appearance'
+    ],
+    applications: [
+      'High-end apparel manufacturing',
+      'Suiting & shirting factories',
+      'Export garment production lines'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1590736704728-f4730bb30770?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-shunfa-s510-d4',
+    brand: 'Shunfa',
+    category: 'Heavy Duty',
+    name: 'Shunfa Heavy Duty Direct Drive Computerized Lockstitch',
+    model: 'S510-D4',
+    description: 'Heavy duty direct drive sewing machine engineered specifically for heavy materials including denim, canvas, thick curtains, leather, and bags.',
+    specifications: {
+      'Material Compatibility': 'Medium to Extra Heavy Materials',
+      'Needle Bar Stroke': '35 mm',
+      'Needle System': 'DPx5 #18 - #23',
+      'Max Stitch Length': '7 mm',
+      'Presser Foot Lift': '7 mm (Hand) / 13 mm (Auto)',
+      'Max Speed': '3500 RPM'
+    },
+    features: [
+      'Reinforced feed dog mechanism and heavy feed eccentric',
+      'Auto thread trimming and auto reverse backtacking for thick threads',
+      'High torque direct drive motor easily penetrates multi-layer denim',
+      'Extra clearance under arm for handling heavy cloth'
+    ],
+    applications: [
+      'Jeans and denim jackets',
+      'Canvas bags, backpacks, belts',
+      'Leather goods and upholstery',
+      'Workwear and military uniforms'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-shunfa-a6',
+    brand: 'Shunfa',
+    category: 'Lockstitch',
+    name: 'Shunfa Smart Touch Computerized Sewing Machine',
+    model: 'A6',
+    description: 'Sleek next-generation computerized sewing machine with digital touch button panel, electronic step motor stitch regulator, and ultra quiet operation.',
+    specifications: {
+      'Control Panel': 'Smart Touch Soft Keys Panel',
+      'Stitch Pattern': '9 Built-in Ornamental Stitch Patterns',
+      'Motor System': 'Dual Stepper Motor for Feed & Stitch Length',
+      'Max Sewing Speed': '5000 RPM',
+      'Auto Foot Lifter': 'Built-in Stepper Motor Foot Lifter'
+    },
+    features: [
+      'Stepper motor precise stitch regulation eliminates mechanical wear',
+      'Digital stitch length adjustment down to 0.1mm accuracy',
+      'Ornamental stitching capability for decorative collar/pocket seams',
+      'Ultra smooth motion with silent foot lifting'
+    ],
+    applications: [
+      'Fashion designer studios',
+      'High fashion apparel production',
+      'Decorative stitching on coats, pockets & collars'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-shunfa-sf202cxd',
+    brand: 'Shunfa',
+    category: 'Overlock',
+    name: 'Shunfa High Speed Direct Drive Overlock Machine',
+    model: 'SF202CXD',
+    description: 'Super high speed direct drive overlock machine available in 4-thread and 5-thread configurations for clean edge trimmings and stretch seams.',
+    specifications: {
+      'Threads / Needles': '4 Thread / 2 Needles (or 5 Thread)',
+      'Max Sewing Speed': '7000 RPM',
+      'Overedging Width': '4.0 - 6.0 mm',
+      'Differential Ratio': '0.7 - 2.0',
+      'Needle Type': 'DCx27 #9 to #14',
+      'Motor': 'Built-in Direct Drive Motor 550W'
+    },
+    features: [
+      'Micro-adjust differential feed prevents fabric puckering or stretching',
+      'Needle bar oil-proof mechanism guarantees stainless garment output',
+      'Integrated LED illumination over needle plate zone',
+      'Instant speed response and energy-thrifty direct drive'
+    ],
+    applications: [
+      'T-shirts, polo shirts, sportswear',
+      'Undergarments and swimwear',
+      'Jersey fabrics and elastic seam edging'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1516762689617-e1cffffd478d?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-shunfa-sf0303cx',
+    brand: 'Shunfa',
+    category: 'Heavy Duty',
+    name: 'Shunfa Compound Feed Walking Foot Lockstitch',
+    model: 'SF0303CX',
+    description: 'Top and bottom compound feed walking foot heavy-duty lockstitch machine designed for non-slip sewing of thick leather, vinyl, and technical textiles.',
+    specifications: {
+      'Feed Mechanism': 'Walking Foot (Top & Bottom Feed)',
+      'Hook Type': 'Large Capacity Vertical Axis Rotary Hook',
+      'Max Stitch Length': '8 mm',
+      'Needle System': 'DPx17 #18 - #24',
+      'Presser Foot Lift': '8 mm (Hand) / 16 mm (Knee)',
+      'Max Speed': '2000 RPM'
+    },
+    features: [
+      'Alternating walking presser feet prevent slipping of sticky materials',
+      'Large bobbin holds twice as much thread for continuous thick thread sewing',
+      'Ideal for heavy leather, vinyl, thick webbing, and car seat cushions',
+      'Heavy duty cast iron body structure'
+    ],
+    applications: [
+      'Car seat covers & automotive interiors',
+      'Leather boots, jackets & sofa upholstery',
+      'Safety harnesses and industrial straps',
+      'Sails, tents and tarpaulins'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-embroidery-threads',
+    brand: 'Jayadeva',
+    category: 'Accessories & Threads',
+    name: 'High Quality Embroidery Threads & Metallic Cones',
+    model: 'TRD-RAYON-POLY',
+    description: 'Premium grade 100% Trilobal Polyester and Viscose Rayon embroidery threads in 120 vibrant shade cones designed for high speed embroidery machines.',
+    specifications: {
+      'Material': '100% Trilobal Polyester / Viscose Rayon',
+      'Cone Weight': '1000 meters / 5000 meters cones',
+      'Colors': '120 standard shade colors available',
+      'Tensile Strength': 'High tenacity low lint formulation',
+      'Compatibility': 'Tested up to 1200 RPM machine speed'
+    },
+    features: [
+      'Smooth knot-free unwinding prevents thread breakage during high speed embroidery',
+      'Excellent luster and color fastness against washing and bleaching',
+      'Includes metallic gold and silver specialty threads'
+    ],
+    applications: [
+      'High speed embroidery machines',
+      'Saree borders, logos, badges and monogramming'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prod-embroidery-accessories',
+    brand: 'Jayadeva',
+    category: 'Accessories & Threads',
+    name: 'Industrial Sewing & Embroidery Accessories Kit',
+    model: 'ACC-KIT-PRO',
+    description: 'Genuine spare parts and accessories kit including original Koban hooks, aluminum hoops, cap drivers, magnetic bobbins, titanium needles, and precision oils.',
+    specifications: {
+      'Includes': 'Hoops, cap frames, Koban hooks, titanium needles, bobbins, tension springs, thread oilers',
+      'Compatibility': 'Sunshine & Shunfa Machines',
+      'Quality': 'Grade A OEM Certified Parts'
+    },
+    features: [
+      '100% genuine replacement parts ensuring long machine lifespan',
+      'Precision machined components for smooth operation'
+    ],
+    applications: [
+      'Routine maintenance and repairs',
+      'Specialized garment framing and hooping'
+    ],
+    showPrice: false,
+    mainImage: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=1000&q=80',
+    galleryImages: [],
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+];
+
+export const initialEnquiries: Enquiry[] = [
+  {
+    id: 'enq-101',
+    customerName: 'Rajesh Kumar (Sri Krishna Textiles)',
+    phone: '+91 98765 43210',
+    email: 'rajesh@srikrishnatextiles.com',
+    productName: 'Sunshine Pro High Speed Multi-Head Embroidery Machine',
+    productId: 'prod-sun-1202-pro',
+    message: 'We are expanding our garment unit in Peenya and need a quotation for 2 units of 2-head Sunshine embroidery machines with installation and training support.',
+    status: 'NEW',
+    createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+  },
+  {
+    id: 'enq-102',
+    customerName: 'Anitha Reddy (Royal Boutique)',
+    phone: '+91 99800 11223',
+    email: 'anitha@royalboutique.in',
+    productName: 'Shunfa Direct Drive Computerized Lockstitch Machine',
+    productId: 'prod-shunfa-s310',
+    message: 'Please provide price and availability for Shunfa S310 and S320 lockstitch machines along with warranty details.',
+    status: 'CONTACTED',
+    createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
+  }
+];
