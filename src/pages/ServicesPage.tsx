@@ -24,7 +24,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ settings, onRequestQ
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Service 1: SALES */}
         <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/80 p-6 sm:p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all space-y-4">
-          <div className="w-12 h-12 bg-orange-100/80 text-[#FF6321] rounded-2xl flex items-center justify-center font-bold">
+          <div className="w-12 h-12 bg-amber-100/80 text-[#C89327] rounded-2xl flex items-center justify-center font-bold">
             <ShoppingBag className="w-6 h-6" />
           </div>
           <h2 className="text-2xl font-extrabold text-[#002B5B]">SALES</h2>
@@ -128,7 +128,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ settings, onRequestQ
             onClick={() => {
               window.location.href = `tel:${settings.phone1.replace(/\s+/g, '')}`;
             }}
-            className="px-5 py-3 bg-[#FF6321] hover:bg-[#e85a1e] text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-orange-500/25 flex items-center space-x-2"
+            className="px-5 py-3 bg-[#C89327] hover:bg-[#b5821f] text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-amber-900/20 flex items-center space-x-2"
           >
             <Phone className="w-4 h-4" />
             <span>Call Service Team</span>

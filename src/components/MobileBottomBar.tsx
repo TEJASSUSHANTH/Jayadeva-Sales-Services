@@ -30,7 +30,7 @@ export const MobileBottomBar: React.FC<MobileBottomBarProps> = ({
           className="flex flex-col items-center justify-center space-y-0.5 active:bg-white/10 text-slate-100 transition-colors"
           id="btn-mobile-bottom-call"
         >
-          <Phone className="w-4 h-4 text-[#FF6321]" />
+          <Phone className="w-4 h-4 text-[#C89327]" />
           <span className="text-[11px] font-bold tracking-wider uppercase">CALL</span>
         </button>
 
@@ -45,7 +45,7 @@ export const MobileBottomBar: React.FC<MobileBottomBarProps> = ({
 
         <button
           onClick={onRequestQuote}
-          className="flex flex-col items-center justify-center space-y-0.5 active:bg-[#e85a1e] bg-[#FF6321] text-white font-bold transition-colors"
+          className="flex flex-col items-center justify-center space-y-0.5 active:bg-[#001d3d] bg-[#002B5B] text-white font-bold transition-colors"
           id="btn-mobile-bottom-enquire"
         >
           <FileText className="w-4 h-4" />

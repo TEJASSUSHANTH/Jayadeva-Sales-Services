@@ -89,7 +89,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
             placeholder="Search by machine model (e.g., S310, S510-D4, FU-904, Pro)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-10 py-2.5 text-xs sm:text-sm bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden shadow-2xs"
+            className="w-full pl-10 pr-10 py-2.5 text-xs sm:text-sm bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#002B5B] focus:border-[#002B5B] outline-hidden shadow-2xs"
             id="input-product-search"
           />
           {searchQuery && (
@@ -137,7 +137,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
                   selectedCategory === cat
-                    ? 'bg-[#FF6321] text-white font-bold shadow-md shadow-orange-500/20'
+                    ? 'bg-[#002B5B] text-white font-bold shadow-md shadow-blue-900/20'
                     : 'bg-white/80 text-slate-700 hover:bg-slate-100 border border-slate-200/80'
                 }`}
                 id={`filter-cat-${cat}`}
@@ -156,7 +156,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
             </div>
             <button
               onClick={clearFilters}
-              className="text-[#FF6321] hover:text-[#e85a1e] font-bold underline"
+              className="text-[#C89327] hover:text-[#b5821f] font-bold underline"
             >
               Clear All Filters
             </button>

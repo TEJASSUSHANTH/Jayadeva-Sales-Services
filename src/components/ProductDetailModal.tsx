@@ -39,7 +39,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         {/* Modal Sticky Header */}
         <div className="sticky top-0 bg-white/90 backdrop-blur-md z-10 px-6 py-4 border-b border-slate-200/80 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-orange-100/90 text-[#FF6321] border border-orange-200/80">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100/90 text-amber-900 border border-amber-300/80">
               {product.brand}
             </span>
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
@@ -86,7 +86,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Right: Info & Primary Actions */}
             <div className="space-y-5">
               <div>
-                <div className="text-xs font-mono font-bold text-[#FF6321] mb-1">
+                <div className="text-xs font-mono font-bold text-[#C89327] mb-1">
                   MODEL: {product.model}
                 </div>
                 <h2 className="text-2xl font-extrabold text-[#002B5B] leading-tight">
@@ -114,7 +114,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <button
                   onClick={() => onRequestQuote(product)}
-                  className="flex items-center justify-center space-x-2 py-3 px-4 bg-[#FF6321] hover:bg-[#e85a1e] text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-orange-500/20"
+                  className="flex items-center justify-center space-x-2 py-3 px-4 bg-[#002B5B] hover:bg-[#001d3d] text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-blue-900/20"
                   id="btn-detail-request-quote"
                 >
                   <FileText className="w-4 h-4" />
@@ -135,7 +135,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   className="flex items-center justify-center space-x-2 py-2.5 px-4 bg-[#002B5B] hover:bg-[#001f42] text-white font-semibold text-xs rounded-xl transition-all shadow-md"
                   id="btn-detail-call"
                 >
-                  <PhoneCall className="w-4 h-4 text-[#FF6321]" />
+                  <PhoneCall className="w-4 h-4 text-[#C89327]" />
                   <span>Call Now</span>
                 </button>
 

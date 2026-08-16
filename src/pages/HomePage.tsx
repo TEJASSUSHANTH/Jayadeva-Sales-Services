@@ -34,16 +34,16 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
 
               <div className="space-y-2">
+                <div className="text-xs sm:text-sm uppercase tracking-widest font-extrabold text-[#C89327]">
+                  WELCOME TO JAYADEVA SALES & SERVICES
+                </div>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-                  Industrial Sewing & Embroidery Machines
+                  Your Authorized Shop for <span className="text-[#FF6321]">SUNSHINE</span> & <span className="text-[#00B4D8]">SHUNFA</span> Machinery
                 </h1>
-                <p className="text-xl sm:text-2xl font-bold text-[#FF6321] tracking-wide">
-                  Jayadeva Sales & Services
-                </p>
               </div>
 
               <p className="text-slate-200 text-base sm:text-lg max-w-2xl leading-relaxed">
-                Official sales and service provider for Sunshine embroidery machines and Shunfa industrial sewing machines.
+                Jayadeva Sales & Services is the official showroom and authorized service provider for <strong className="text-white">SUNSHINE Computerized Embroidery Machines</strong> and <strong className="text-white">SHUNFA High-Speed Industrial Sewing Machines</strong>.
               </p>
 
               <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">

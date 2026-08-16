@@ -99,12 +99,12 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
               )}
 
               {product && (
-                <div className="bg-orange-50/80 border border-orange-200/80 rounded-xl p-3 text-xs flex items-center space-x-3 backdrop-blur-xs">
+                <div className="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3 text-xs flex items-center space-x-3 backdrop-blur-xs">
                   <img
                     src={product.mainImage}
                     alt={product.name}
                     referrerPolicy="no-referrer"
-                    className="w-12 h-12 object-cover rounded-lg border border-orange-200/80"
+                    className="w-12 h-12 object-cover rounded-lg border border-amber-200/80"
                   />
                   <div>
                     <div className="font-bold text-[#002B5B]">{product.name}</div>
@@ -123,7 +123,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
                   placeholder="Enter your full name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#002B5B] focus:border-[#002B5B] outline-hidden"
                   id="input-enquiry-name"
                 />
               </div>
@@ -138,7 +138,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
                   placeholder="Enter 10-digit mobile number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#002B5B] focus:border-[#002B5B] outline-hidden"
                   id="input-enquiry-phone"
                 />
               </div>
@@ -152,7 +152,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
                   placeholder="Enter email address (optional)"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#002B5B] focus:border-[#002B5B] outline-hidden"
                   id="input-enquiry-email"
                 />
               </div>
@@ -166,7 +166,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#002B5B] focus:border-[#002B5B] outline-hidden"
                   id="input-enquiry-message"
                 />
               </div>
@@ -175,7 +175,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ product, onClose }) 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-3 px-4 bg-[#FF6321] hover:bg-[#e85a1e] text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-orange-500/25 disabled:opacity-50"
+                  className="w-full py-3 px-4 bg-[#002B5B] hover:bg-[#001d3d] text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-blue-900/20 disabled:opacity-50"
                   id="btn-submit-enquiry"
                 >
                   <Send className="w-4 h-4" />

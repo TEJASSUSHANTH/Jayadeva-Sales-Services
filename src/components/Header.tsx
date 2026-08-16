@@ -43,13 +43,13 @@ export const Header: React.FC<HeaderProps> = ({
               Authorized Sales & Service Dealer
             </span>
             <span className="flex items-center space-x-1">
-              <PhoneCall className="w-3 h-3 text-[#FF6321]" />
+              <PhoneCall className="w-3 h-3 text-[#C89327]" />
               <span>{settings.phone1}</span>
             </span>
             <span className="hidden md:inline">| {settings.workingHours}</span>
           </div>
           <div className="flex items-center space-x-3 text-slate-300 text-xs">
-            <span className="hidden sm:inline font-semibold text-[#FF6321]">Sunshine</span>
+            <span className="hidden sm:inline font-bold text-[#FF6321]">Sunshine</span>
             <span className="hidden sm:inline">•</span>
             <span className="hidden sm:inline font-semibold text-[#008080]">Shunfa</span>
           </div>
@@ -77,8 +77,8 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => onNavigate(item.id)}
                 className={`text-xs sm:text-sm font-semibold transition-all py-1 border-b-2 ${
                   isActive
-                    ? 'text-[#002B5B] border-[#FF6321] font-bold'
-                    : 'text-slate-600 border-transparent hover:text-[#FF6321]'
+                    ? 'text-[#002B5B] border-[#C89327] font-bold'
+                    : 'text-slate-600 border-transparent hover:text-[#002B5B] hover:border-[#C89327]/40'
                 }`}
                 id={`nav-${item.id}`}
               >
@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onRequestQuote}
-            className="inline-flex items-center space-x-1.5 px-5 py-2.5 text-xs font-bold text-white bg-[#FF6321] hover:bg-[#e85a1e] rounded-lg transition-all shadow-md shadow-orange-500/20 hover:shadow-lg"
+            className="inline-flex items-center space-x-1.5 px-5 py-2.5 text-xs font-bold text-white bg-[#002B5B] hover:bg-[#001d3d] rounded-lg transition-all shadow-md shadow-blue-900/20 hover:shadow-lg"
             id="btn-header-request-quote"
           >
             <FileText className="w-4 h-4" />
@@ -140,8 +140,8 @@ export const Header: React.FC<HeaderProps> = ({
                   }}
                   className={`text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                     isActive
-                      ? 'bg-orange-500/10 text-[#FF6321] border-l-4 border-[#FF6321] font-bold'
-                      : 'text-slate-800 hover:bg-slate-100/60'
+                      ? 'bg-blue-50 text-[#002B5B] border-l-4 border-[#C89327] font-bold'
+                      : 'text-slate-800 hover:bg-slate-100/60 hover:text-[#002B5B]'
                   }`}
                 >
                   {item.label}
@@ -167,7 +167,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onRequestQuote();
                 setMobileMenuOpen(false);
               }}
-              className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-bold text-white bg-[#FF6321] rounded-lg shadow-md"
+              className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-bold text-white bg-[#002B5B] hover:bg-[#001d3d] rounded-lg shadow-md"
             >
               <FileText className="w-4 h-4" />
               <span>Request Quote</span>

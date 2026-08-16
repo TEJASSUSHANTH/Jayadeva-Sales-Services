@@ -16,7 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const getBrandBadge = (brand: string) => {
     switch (brand) {
       case 'Sunshine':
-        return 'bg-orange-100 text-orange-800 border-orange-200';
+        return 'bg-amber-100/90 text-amber-900 border-amber-300/80';
       case 'Shunfa':
         return 'bg-teal-100 text-teal-800 border-teal-200';
       default:
@@ -55,7 +55,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           <h3
             onClick={() => onSelect(product)}
-            className="font-bold text-[#002B5B] text-base leading-snug hover:text-[#FF6321] transition-colors cursor-pointer line-clamp-2 mb-2"
+            className="font-bold text-[#002B5B] text-base leading-snug hover:text-[#C89327] transition-colors cursor-pointer line-clamp-2 mb-2"
           >
             {product.name}
           </h3>
@@ -82,7 +82,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             ) : (
               <div className="flex items-center space-x-1.5 text-slate-600 font-semibold text-xs">
-                <Info className="w-3.5 h-3.5 text-[#FF6321] shrink-0" />
+                <Info className="w-3.5 h-3.5 text-[#C89327] shrink-0" />
                 <span>Price: Contact for latest quote</span>
               </div>
             )}
@@ -101,7 +101,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
             <button
               onClick={() => onEnquire(product)}
-              className="w-full flex items-center justify-center space-x-1 py-2.5 px-3 bg-[#FF6321] hover:bg-[#e85a1e] text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-orange-500/20"
+              className="w-full flex items-center justify-center space-x-1 py-2.5 px-3 bg-[#002B5B] hover:bg-[#001d3d] text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-blue-900/20"
               id={`btn-product-enquire-${product.id}`}
             >
               <MessageSquare className="w-3.5 h-3.5" />

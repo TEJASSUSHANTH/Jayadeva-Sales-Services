@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
               <li>
                 <button
                   onClick={() => onNavigate('home')}
-                  className="hover:text-[#FF6321] transition-colors text-slate-300"
+                  className="hover:text-[#C89327] transition-colors text-slate-300"
                 >
                   Home
                 </button>
@@ -42,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
               <li>
                 <button
                   onClick={() => onNavigate('products')}
-                  className="hover:text-[#FF6321] transition-colors text-slate-300"
+                  className="hover:text-[#C89327] transition-colors text-slate-300"
                 >
                   Our Products
                 </button>
@@ -50,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
               <li>
                 <button
                   onClick={() => onNavigate('services')}
-                  className="hover:text-[#FF6321] transition-colors text-slate-300"
+                  className="hover:text-[#C89327] transition-colors text-slate-300"
                 >
                   Sales & Service Support
                 </button>
@@ -58,7 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
               <li>
                 <button
                   onClick={() => onNavigate('about')}
-                  className="hover:text-[#FF6321] transition-colors text-slate-300"
+                  className="hover:text-[#C89327] transition-colors text-slate-300"
                 >
                   About Jayadeva
                 </button>
@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
               <li>
                 <button
                   onClick={() => onNavigate('contact')}
-                  className="hover:text-[#FF6321] transition-colors text-slate-300"
+                  className="hover:text-[#C89327] transition-colors text-slate-300"
                 >
                   Contact Us
                 </button>
@@ -81,27 +81,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-300">
               <li>
-                <button onClick={() => onNavigate('products')} className="hover:text-[#FF6321] text-left">
+                <button onClick={() => onNavigate('products')} className="hover:text-[#C89327] text-left">
                   Sunshine Multi-Head Embroidery
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('products')} className="hover:text-[#FF6321] text-left">
+                <button onClick={() => onNavigate('products')} className="hover:text-[#C89327] text-left">
                   Shunfa Direct Drive Lockstitch
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('products')} className="hover:text-[#FF6321] text-left">
+                <button onClick={() => onNavigate('products')} className="hover:text-[#C89327] text-left">
                   Heavy Duty Walking Foot Machines
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('products')} className="hover:text-[#FF6321] text-left">
+                <button onClick={() => onNavigate('products')} className="hover:text-[#C89327] text-left">
                   High Speed Overlock & Interlock
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('products')} className="hover:text-[#FF6321] text-left">
+                <button onClick={() => onNavigate('products')} className="hover:text-[#C89327] text-left">
                   Embroidery Cones & Threads
                 </button>
               </li>
@@ -115,19 +115,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
             </h4>
             <ul className="space-y-3 text-xs text-slate-300">
               <li className="flex items-start space-x-2.5">
-                <MapPin className="w-4 h-4 text-[#FF6321] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#C89327] shrink-0 mt-0.5" />
                 <span>{settings.address}, {settings.city}, {settings.state} - {settings.pincode}</span>
               </li>
               <li className="flex items-center space-x-2.5">
-                <Phone className="w-4 h-4 text-[#FF6321] shrink-0" />
+                <Phone className="w-4 h-4 text-[#C89327] shrink-0" />
                 <span>{settings.phone1} {settings.phone2 ? `/ ${settings.phone2}` : ''}</span>
               </li>
               <li className="flex items-center space-x-2.5">
-                <Mail className="w-4 h-4 text-[#FF6321] shrink-0" />
+                <Mail className="w-4 h-4 text-[#C89327] shrink-0" />
                 <span>{settings.email}</span>
               </li>
               <li className="flex items-center space-x-2.5">
-                <Clock className="w-4 h-4 text-[#FF6321] shrink-0" />
+                <Clock className="w-4 h-4 text-[#C89327] shrink-0" />
                 <span>{settings.workingHours}</span>
               </li>
             </ul>
