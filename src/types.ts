@@ -60,6 +60,14 @@ export interface WebsiteSettings {
   logoUrl?: string;
   logoPrimaryColor?: string;
   logoSubtitleColor?: string;
+  // Proprietor & Shop Photos details
+  proprietorName?: string;
+  proprietorTitle?: string;
+  proprietorPhone?: string;
+  proprietorEmail?: string;
+  proprietorBio?: string;
+  proprietorPhotoUrl?: string;
+  shopPhotos?: string[];
 }
 
 export interface User {

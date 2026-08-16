@@ -298,6 +298,88 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* GOOGLE REVIEWS SECTION */}
       <GoogleReviewsSection />
 
+      {/* PROPRIETOR & SHOP SHOWROOM SPOTLIGHT */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/80 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Proprietor Card */}
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#002B5B] to-[#001733] text-white rounded-2xl p-6 shadow-lg space-y-4 border border-amber-400/30 relative overflow-hidden">
+            <div className="flex items-center space-x-4">
+              <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-800 shrink-0">
+                <img
+                  src={settings.proprietorPhotoUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'}
+                  alt={settings.proprietorName || 'Mr. Ravindra VD'}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                  Proprietor & Founder
+                </span>
+                <h4 className="text-lg font-black text-white">
+                  {settings.proprietorName || 'Mr. Ravindra VD'}
+                </h4>
+                <p className="text-xs text-slate-300">
+                  {settings.proprietorTitle || 'Managing Director'}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed italic">
+              "{settings.proprietorBio || 'Karnataka authorized sales and service dealer for Sunshine computer embroidery and Shunfa industrial sewing machinery.'}"
+            </p>
+
+            <button
+              onClick={() => onNavigate('about')}
+              className="w-full py-2.5 px-4 bg-[#FF6321] hover:bg-orange-600 text-white font-extrabold text-xs rounded-xl transition-all text-center shadow-md block"
+            >
+              Meet Our Proprietor & View Details
+            </button>
+          </div>
+
+          {/* Showroom & Shop Facility Preview */}
+          <div className="lg:col-span-7 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs font-bold text-[#FF6321] uppercase tracking-wider block">
+                  Agrahara Dasarahalli, Bengaluru
+                </span>
+                <h3 className="text-xl font-black text-[#002B5B]">
+                  Machinery Showroom & Workshop
+                </h3>
+              </div>
+              <button
+                onClick={() => onNavigate('about')}
+                className="text-xs font-bold text-[#002B5B] hover:text-[#FF6321] underline"
+              >
+                View All Photos
+              </button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              {(settings.shopPhotos && settings.shopPhotos.length > 0 ? settings.shopPhotos.slice(0, 3) : [
+                'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80'
+              ]).map((photo, i) => (
+                <div key={i} className="aspect-4/3 rounded-xl overflow-hidden bg-slate-900 border border-slate-200/80 shadow-xs cursor-pointer" onClick={() => onNavigate('about')}>
+                  <img
+                    src={photo}
+                    alt={`Shop Photo ${i + 1}`}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs text-slate-600">
+              Visit our physical store at <strong>35/6, Magadi Main Rd, Agrahara Dasarahalli, Rajajinagar, Bengaluru - 560079</strong> for live machine demonstrations.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA QUOTE BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-[#002B5B] to-[#001f42] text-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-white/20 backdrop-blur-lg flex flex-col md:flex-row items-center justify-between gap-6">

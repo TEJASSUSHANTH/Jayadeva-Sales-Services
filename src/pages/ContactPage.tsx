@@ -137,6 +137,48 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
             </ul>
           </div>
 
+          {/* Proprietor Direct Contact Card */}
+          <div className="bg-gradient-to-br from-[#002B5B] to-[#001733] text-white rounded-2xl p-5 shadow-lg space-y-3 border border-amber-400/30">
+            <div className="flex items-center space-x-3.5">
+              <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-amber-400/80 bg-slate-800 shrink-0">
+                <img
+                  src={settings.proprietorPhotoUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'}
+                  alt={settings.proprietorName || 'Mr. Ravindra VD'}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                  Proprietor Contact
+                </span>
+                <h3 className="text-base font-extrabold text-white">
+                  {settings.proprietorName || 'Mr. Ravindra VD'}
+                </h3>
+                <p className="text-xs text-slate-300">
+                  {settings.proprietorTitle || 'Proprietor & Managing Director'}
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2 text-xs">
+              <a
+                href={`tel:${settings.proprietorPhone || settings.phone1}`}
+                className="flex-1 py-2 px-3 bg-[#FF6321] hover:bg-orange-600 text-white font-bold rounded-xl text-center transition-all"
+              >
+                Call Proprietor
+              </a>
+              <a
+                href={`https://wa.me/${settings.whatsAppNumber}?text=Hello%20${encodeURIComponent(settings.proprietorName || 'Mr. Ravindra VD')},%20I%20have%20an%20enquiry%20regarding%20machines.`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-center transition-all"
+              >
+                WhatsApp Direct
+              </a>
+            </div>
+          </div>
+
           {/* Map Embed Container */}
           <div className="bg-white/80 rounded-2xl border border-white/80 overflow-hidden shadow-lg h-64 backdrop-blur-md">
             <iframe

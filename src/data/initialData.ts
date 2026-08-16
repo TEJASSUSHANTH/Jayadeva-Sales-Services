@@ -8,13 +8,25 @@ export const initialSettings: WebsiteSettings = {
   phone2: '+91 80 2670 9876',
   whatsAppNumber: '919343478096',
   email: 'sales@jayadevaservices.com',
-  address: '#42, 1st Main, Industrial Suburb, Rajajinagar 2nd Stage',
+  address: '35/6, Magadi Main Rd, Agrahara Dasarahalli, Rajajinagar',
   city: 'Bengaluru',
   state: 'Karnataka',
-  pincode: '560010',
+  pincode: '560079',
   workingHours: 'Monday – Saturday: 9:00 AM – 7:00 PM',
-  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.653493721342!2d77.545198!3d12.993952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU5JzM4LjIiTiA3N8KwMzInNDIuNyJF!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin',
+  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.828292850903!2d77.5401037!3d12.982247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3dd43ef817b1%3A0x6a1b24d9f67a21f1!2sMagadi%20Main%20Rd%2C%20Agrahara%20Dasarahalli%2C%20Bengaluru%2C%20Karnataka%20560079!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin',
   generalBrochureUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+  proprietorName: 'Mr. Ravindra VD',
+  proprietorTitle: 'Proprietor & Managing Director',
+  proprietorPhone: '+91 93434 78096',
+  proprietorEmail: 'sales@jayadevaservices.com',
+  proprietorBio: 'With over 20+ years of industrial machinery expertise, Mr. Ravindra VD leads Jayadeva Sales & Services as Karnataka\'s leading authorized sales and technical service center for Sunshine Computer Embroidery and Shunfa Industrial Sewing Machines.',
+  proprietorPhotoUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
+  shopPhotos: [
+    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80'
+  ]
 };
 
 export const initialProducts: Product[] = [
