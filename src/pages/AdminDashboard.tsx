@@ -21,6 +21,10 @@ import {
   Tag,
   Image,
   Palette,
+  ShieldCheck,
+  Lock,
+  Key,
+  ShieldAlert,
 } from 'lucide-react';
 import { Product, Enquiry, WebsiteSettings, BrandType, CategoryType, EnquiryStatus } from '../types';
 import { Logo } from '../components/Logo';
@@ -36,6 +40,7 @@ import {
   updateSettings,
   uploadFile,
   logoutAdmin,
+  changePassword,
 } from '../lib/api';
 
 interface AdminDashboardProps {
@@ -44,7 +49,7 @@ interface AdminDashboardProps {
 }
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavigateHome }) => {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'enquiries' | 'settings' | 'logo'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'enquiries' | 'settings' | 'logo' | 'security'>('dashboard');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
@@ -77,6 +82,43 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavi
   const [settingsForm, setSettingsForm] = useState<WebsiteSettings | null>(null);
   const [savingSettings, setSavingSettings] = useState(false);
   const [settingsMsg, setSettingsMsg] = useState('');
+
+  // Security & Password Form State
+  const [currPassword, setCurrPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [pwdMsg, setPwdMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [pwdLoading, setPwdLoading] = useState(false);
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPwdMsg(null);
+    if (!currPassword || !newPassword || !confirmPassword) {
+      setPwdMsg({ type: 'error', text: 'Please fill in all password fields.' });
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPwdMsg({ type: 'error', text: 'New passwords do not match.' });
+      return;
+    }
+    if (newPassword.length < 8) {
+      setPwdMsg({ type: 'error', text: 'New password must be at least 8 characters.' });
+      return;
+    }
+
+    setPwdLoading(true);
+    try {
+      await changePassword(currPassword, newPassword);
+      setPwdMsg({ type: 'success', text: 'Admin password updated successfully!' });
+      setCurrPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (err: any) {
+      setPwdMsg({ type: 'error', text: err.message || 'Failed to update password.' });
+    } finally {
+      setPwdLoading(false);
+    }
+  };
 
   const loadAllData = async () => {
     setLoading(true);
@@ -422,6 +464,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavi
             >
               <SettingsIcon className="w-4 h-4" />
               <span>Settings</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('security')}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+                activeTab === 'security'
+                  ? 'bg-[#FF6321] text-white shadow-lg shadow-orange-500/20'
+                  : 'hover:bg-white/10 text-slate-300'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>Security & Password</span>
             </button>
           </nav>
         </div>
@@ -1347,6 +1401,140 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavi
                     </button>
                   </div>
                 </form>
+              </div>
+            )}
+
+            {activeTab === 'security' && (
+              <div className="space-y-6">
+                {/* SECURITY STATUS OVERVIEW */}
+                <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-white/80 shadow-lg">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="p-2.5 bg-emerald-100 text-emerald-800 rounded-xl">
+                      <ShieldCheck className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-[#002B5B] text-base">System Security Controls</h3>
+                      <p className="text-xs text-slate-500">
+                        Active protective layers defending your application and customer data
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start space-x-3">
+                      <Lock className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-xs font-black text-emerald-900 block">Rate Limiting</span>
+                        <span className="text-[11px] text-emerald-700">Brute-force & spam flood protection active</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start space-x-3">
+                      <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-xs font-black text-emerald-900 block">HTTP Security</span>
+                        <span className="text-[11px] text-emerald-700">Nosniff, SameOrigin & HSTS headers</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start space-x-3">
+                      <Key className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-xs font-black text-emerald-900 block">Secure Cookies</span>
+                        <span className="text-[11px] text-emerald-700">HttpOnly, SameSite lax auth tokens</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start space-x-3">
+                      <ShieldAlert className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-xs font-black text-emerald-900 block">Input Sanitization</span>
+                        <span className="text-[11px] text-emerald-700">MIME type filtering & XSS escaping</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CHANGE PASSWORD CARD */}
+                <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-white/80 shadow-lg max-w-xl">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="p-2 bg-[#002B5B] text-white rounded-xl">
+                      <Lock className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-[#002B5B] text-base">Change Admin Password</h3>
+                      <p className="text-xs text-slate-500">Update your account credentials using salted bcrypt hashing</p>
+                    </div>
+                  </div>
+
+                  {pwdMsg && (
+                    <div
+                      className={`p-3.5 rounded-xl text-xs font-bold mb-4 flex items-center space-x-2 ${
+                        pwdMsg.type === 'success'
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-red-100 text-red-800 border border-red-300'
+                      }`}
+                    >
+                      <ShieldCheck className="w-4 h-4 shrink-0" />
+                      <span>{pwdMsg.text}</span>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleChangePassword} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Current Password *
+                      </label>
+                      <input
+                        type="password"
+                        value={currPassword}
+                        onChange={(e) => setCurrPassword(e.target.value)}
+                        required
+                        className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                        placeholder="••••••••"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        New Password (Min. 8 characters) *
+                      </label>
+                      <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                        minLength={8}
+                        className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                        placeholder="••••••••"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Confirm New Password *
+                      </label>
+                      <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        minLength={8}
+                        className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                        placeholder="••••••••"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={pwdLoading}
+                      className="w-full py-3 bg-[#002B5B] hover:bg-[#001733] text-white font-bold text-xs rounded-xl transition-all shadow-md flex items-center justify-center space-x-2"
+                    >
+                      <Lock className="w-4 h-4" />
+                      <span>{pwdLoading ? 'Updating Password...' : 'Update Password'}</span>
+                    </button>
+                  </form>
+                </div>
               </div>
             )}
           </>

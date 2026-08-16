@@ -122,6 +122,18 @@ export async function logoutAdmin(): Promise<void> {
   await fetch('/api/auth/logout', { method: 'POST' });
 }
 
+export async function changePassword(currentPassword: string, newPassword: string): Promise<void> {
+  const res = await fetch('/api/auth/change-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Failed to change password');
+  }
+}
+
 export async function uploadFile(file: File): Promise<string> {
   const formData = new FormData();
   formData.append('file', file);

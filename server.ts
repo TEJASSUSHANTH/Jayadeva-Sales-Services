@@ -253,18 +253,138 @@ function saveDb() {
   }
 }
 
-// Multer setup for file uploads
+// --- SECURITY UTILITIES & RATE LIMITING ---
+
+// Security Input Sanitization Helpers
+function sanitizeString(str: string): string {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;')
+    .trim();
+}
+
+function isValidEmail(email: string): boolean {
+  if (!email) return true; // Optional in enquiry
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email.trim());
+}
+
+function isValidPhone(phone: string): boolean {
+  const re = /^[\d\s+\-()]{7,20}$/;
+  return re.test(phone.trim());
+}
+
+// In-Memory Rate Limiter
+interface RateLimitEntry {
+  count: number;
+  resetTime: number;
+}
+
+function createRateLimiter(opts: { windowMs: number; max: number; message: string }) {
+  const store = new Map<string, RateLimitEntry>();
+  return (req: Request, res: Response, next: NextFunction) => {
+    const ip = (
+      (req.headers['x-forwarded-for'] as string) ||
+      req.socket.remoteAddress ||
+      'unknown'
+    )
+      .split(',')[0]
+      .trim();
+
+    const now = Date.now();
+    let record = store.get(ip);
+
+    if (!record || now > record.resetTime) {
+      record = { count: 1, resetTime: now + opts.windowMs };
+      store.set(ip, record);
+    } else {
+      record.count += 1;
+    }
+
+    res.setHeader('X-RateLimit-Limit', opts.max);
+    res.setHeader('X-RateLimit-Remaining', Math.max(0, opts.max - record.count));
+    res.setHeader('X-RateLimit-Reset', Math.ceil(record.resetTime / 1000));
+
+    if (record.count > opts.max) {
+      return res.status(429).json({ message: opts.message });
+    }
+    next();
+  };
+}
+
+// Rate Limiter Instances
+const loginLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: 'Too many login attempts. Please try again after 15 minutes.',
+});
+
+const enquiryLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  message: 'Too many enquiry submissions. Please try again in 15 minutes.',
+});
+
+const apiLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300,
+  message: 'Too many requests. Please slow down.',
+});
+
+// Secure Multer setup for file uploads
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml',
+  'application/pdf',
+]);
+
+const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg', '.pdf']);
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOADS_DIR);
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    const ext = path.extname(file.originalname).toLowerCase();
+    const sanitizedExt = ALLOWED_EXTENSIONS.has(ext) ? ext : '.bin';
+    const randomStr = Math.random().toString(36).substring(2, 10);
+    const uniqueName = `file-${Date.now()}-${randomStr}${sanitizedExt}`;
+    cb(null, uniqueName);
   },
 });
-const upload = multer({ storage });
+
+const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (ALLOWED_MIME_TYPES.has(file.mimetype) && ALLOWED_EXTENSIONS.has(ext)) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error(
+        'Invalid file type. Only JPEG, PNG, WEBP, GIF, SVG images and PDF documents are allowed.'
+      )
+    );
+  }
+};
+
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB maximum limit
+  },
+});
+
+// Dummy hash for timing attack mitigation during login
+const DUMMY_HASH = '$2a$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUV';
 
 async function startServer() {
   if (pgPool) {
@@ -272,6 +392,22 @@ async function startServer() {
   }
 
   const app = express();
+
+  // --- HTTP SECURITY HEADERS MIDDLEWARE ---
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    next();
+  });
+
+  // Global API Rate Limiter
+  app.use('/api', apiLimiter);
 
   app.use(express.json({ limit: '10mb' }));
   app.use(cookieParser());
@@ -293,13 +429,16 @@ async function startServer() {
   };
 
   // --- AUTH ROUTES ---
-  app.post('/api/auth/login', async (req: Request, res: Response) => {
+  app.post('/api/auth/login', loginLimiter, async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    if (!email || !password) {
+    if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanAdminEmail = ADMIN_EMAIL.trim().toLowerCase();
+
+    if (cleanEmail === cleanAdminEmail) {
       const isMatch = await bcrypt.compare(password, db.adminPasswordHash);
       if (isMatch) {
         const user: User = {
@@ -311,15 +450,51 @@ async function startServer() {
         const token = jwt.sign(user, JWT_SECRET, { expiresIn: '24h' });
         res.cookie('auth_token', token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: req.secure || req.headers['x-forwarded-proto'] === 'https' || process.env.NODE_ENV === 'production',
           sameSite: 'lax',
           maxAge: 24 * 60 * 60 * 1000,
         });
         return res.json({ message: 'Login successful', user, token });
       }
+    } else {
+      // Execute dummy compare to prevent timing-based user enumeration
+      await bcrypt.compare(password, DUMMY_HASH);
     }
 
     return res.status(401).json({ message: 'Invalid email or password' });
+  });
+
+  app.post('/api/auth/change-password', authenticateToken, async (req: Request, res: Response) => {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'Current password and new password are required' });
+    }
+
+    if (typeof newPassword !== 'string' || newPassword.length < 8) {
+      return res.status(400).json({ message: 'New password must be at least 8 characters long' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, db.adminPasswordHash);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Incorrect current password' });
+    }
+
+    const newHash = await bcrypt.hash(newPassword, 10);
+    db.adminPasswordHash = newHash;
+    saveDb();
+
+    if (pgPool) {
+      try {
+        await pgPool.query('UPDATE admin_users SET password_hash=$1, updated_at=NOW() WHERE id=$2', [
+          newHash,
+          'admin-1',
+        ]);
+      } catch (err) {
+        console.error('Failed updating admin password in Railway PostgreSQL:', err);
+      }
+    }
+
+    return res.json({ message: 'Password updated successfully' });
   });
 
   app.get('/api/auth/me', (req: Request, res: Response) => {
@@ -496,20 +671,40 @@ async function startServer() {
     return res.json(db.enquiries);
   });
 
-  app.post('/api/enquiries', async (req: Request, res: Response) => {
+  app.post('/api/enquiries', enquiryLimiter, async (req: Request, res: Response) => {
     const { customerName, phone, email, productName, productId, message } = req.body;
     if (!customerName || !phone || !message) {
       return res.status(400).json({ message: 'Name, Phone, and Message are required' });
     }
 
+    const cleanName = sanitizeString(customerName);
+    const cleanPhone = sanitizeString(phone);
+    const cleanEmail = sanitizeString(email || '');
+    const cleanProductName = sanitizeString(productName || 'General Enquiry');
+    const cleanProductId = sanitizeString(productId || '');
+    const cleanMessage = sanitizeString(message);
+
+    if (cleanName.length > 100) {
+      return res.status(400).json({ message: 'Name must be 100 characters or less' });
+    }
+    if (!isValidPhone(cleanPhone)) {
+      return res.status(400).json({ message: 'Please enter a valid phone number' });
+    }
+    if (cleanEmail && !isValidEmail(cleanEmail)) {
+      return res.status(400).json({ message: 'Please enter a valid email address' });
+    }
+    if (cleanMessage.length > 2000) {
+      return res.status(400).json({ message: 'Message must be 2000 characters or less' });
+    }
+
     const newEnquiry: Enquiry = {
       id: 'enq-' + Date.now(),
-      customerName,
-      phone,
-      email: email || '',
-      productName: productName || 'General Enquiry',
-      productId: productId || '',
-      message,
+      customerName: cleanName,
+      phone: cleanPhone,
+      email: cleanEmail,
+      productName: cleanProductName,
+      productId: cleanProductId,
+      message: cleanMessage,
       status: 'NEW',
       createdAt: new Date().toISOString(),
     };
@@ -611,12 +806,33 @@ async function startServer() {
   });
 
   // --- FILE UPLOAD API ---
-  app.post('/api/upload', authenticateToken, upload.single('file'), (req: Request, res: Response) => {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-    const fileUrl = `/uploads/${req.file.filename}`;
-    return res.json({ url: fileUrl });
+  app.post('/api/upload', authenticateToken, (req: Request, res: Response) => {
+    upload.single('file')(req, res, (err: any) => {
+      if (err) {
+        if (err instanceof multer.MulterError) {
+          if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({ message: 'File is too large. Maximum allowed size is 10MB.' });
+          }
+          return res.status(400).json({ message: `Upload error: ${err.message}` });
+        }
+        return res.status(400).json({ message: err.message || 'File upload failed' });
+      }
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+      const fileUrl = `/uploads/${req.file.filename}`;
+      return res.json({ url: fileUrl });
+    });
+  });
+
+  // Global Error Handler Middleware
+  app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.error('Unhandled Server Error:', err);
+    res.status(500).json({
+      message: process.env.NODE_ENV === 'production'
+        ? 'Internal Server Error'
+        : err.message || 'An unexpected error occurred',
+    });
   });
 
   // --- VITE OR STATIC SERVING ---
