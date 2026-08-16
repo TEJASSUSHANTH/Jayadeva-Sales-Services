@@ -3,7 +3,7 @@ import { Product, WebsiteSettings, Enquiry } from '../types';
 export const initialSettings: WebsiteSettings = {
   companyName: 'JAYADEVA SALES & SERVICES',
   tagline: 'Sales and Service of Sunshine Embroidery Machines & Shunfa Industrial Sewing Machines',
-  logoUrl: '/logo.svg',
+  logoUrl: '',
   phone1: '+91 93434 78096',
   phone2: '+91 80 2670 9876',
   whatsAppNumber: '919343478096',
