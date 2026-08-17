@@ -1,5 +1,43 @@
 @import "tailwindcss";
 
+@layer base {
+  html {
+    scroll-behavior: smooth !important;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #f8fafc;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(204, 251, 241, 0.4) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(255, 237, 213, 0.3) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: #333333;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Smooth Scrollbar with Brand Colors */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+  border: 2px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #002B5B;
+}
+
 @layer utilities {
   .glass-card {
     background-color: rgba(255, 255, 255, 0.82);
@@ -21,12 +59,42 @@
   }
 }
 
-body {
-  background-color: #f8fafc;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(204, 251, 241, 0.4) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(255, 237, 213, 0.3) 0px, transparent 50%);
-  background-attachment: fixed;
-  color: #333333;
+/* ==========================================================================
+   4K Ultra HD & High-DPI Display Scaling Optimizations (2K / 4K Monitors)
+   ========================================================================== */
+
+/* 2K QHD (2560px+) - Scale containers & base font density */
+@media (min-width: 1920px) {
+  html {
+    font-size: 17px;
+  }
+  .max-w-7xl {
+    max-width: 1760px !important;
+  }
 }
+
+/* 2K / 3K Ultra-Wide (2560px+) */
+@media (min-width: 2560px) {
+  html {
+    font-size: 19px;
+  }
+  .max-w-7xl {
+    max-width: 2360px !important;
+  }
+}
+
+/* 4K UHD (3840px+) Full 4K Resolution Optimization */
+@media (min-width: 3840px) {
+  html {
+    font-size: 24px;
+  }
+  .max-w-7xl {
+    max-width: 3400px !important;
+  }
+}
+
+/* High DPI crisp image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
