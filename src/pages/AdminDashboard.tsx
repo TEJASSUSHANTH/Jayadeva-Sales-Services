@@ -1283,7 +1283,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavi
                             setSettingsForm({ ...settingsForm, proprietorEmail: e.target.value })
                           }
                           className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
-                          placeholder="sales@jayadevaservices.com"
+                          placeholder="jayadevtech1@gmail.com"
                         />
                       </div>
                     </div>

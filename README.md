@@ -55,7 +55,7 @@ Copy `.env.example` to `.env`:
 PORT=3000
 NODE_ENV=development
 JWT_SECRET=jayadeva-secret-key-2026
-ADMIN_EMAIL=admin@jayadevaservices.com
+ADMIN_EMAIL=jayadevtech1@gmail.com
 ADMIN_PASSWORD=admin123
 ```
 
@@ -78,7 +78,7 @@ For PostgreSQL production hosting, the database structure maps directly to the f
 ## 4. Admin Account Setup
 
 Default seeded administrator credentials:
-- **Email**: `admin@jayadevaservices.com`
+- **Email**: `jayadevtech1@gmail.com`
 - **Password**: `admin123`
 
 Access the Admin Login at `http://localhost:3000/admin/login` or via the "Admin Login" link in the website footer.
@@ -109,7 +109,7 @@ This application is fully Railway ready.
 2. **Environment Variables**: Add the following variables in Railway's service settings:
    - `NODE_ENV=production`
    - `JWT_SECRET=your-secure-random-secret`
-   - `ADMIN_EMAIL=admin@jayadevaservices.com`
+   - `ADMIN_EMAIL=jayadevtech1@gmail.com`
    - `ADMIN_PASSWORD=your-secure-password`
 3. **Build & Start Command**:
    - Railway auto-detects `npm run build` and `npm start`.

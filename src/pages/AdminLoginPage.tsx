@@ -13,7 +13,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
   onLoginSuccess,
   onNavigateHome,
 }) => {
-  const [email, setEmail] = useState('admin@jayadevaservices.com');
+  const [email, setEmail] = useState('jayadevtech1@gmail.com');
   const [password, setPassword] = useState('admin123');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -115,7 +115,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
           <div className="mt-6 pt-4 border-t border-slate-100 text-center">
             <div className="inline-flex items-center space-x-1 text-[11px] text-slate-500">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Default Credentials: admin@jayadevaservices.com / admin123</span>
+              <span>Default Credentials: jayadevtech1@gmail.com / admin123</span>
             </div>
           </div>
         </div>

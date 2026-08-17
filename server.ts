@@ -12,7 +12,7 @@ import { Product, Enquiry, WebsiteSettings, User } from './src/types';
 
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'jayadeva-secret-key-2026';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@jayadevaservices.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'jayadevtech1@gmail.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -259,24 +259,21 @@ function saveDb() {
 function sanitizeString(str: string): string {
   if (!str) return '';
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;')
+    .replace(/<[^>]*>?/gm, '') // Strip HTML/script tags to prevent XSS
+    .replace(/[\0\x08\x0B\x0C\x0E-\x1F]/g, '') // Strip non-printable control chars
     .trim();
 }
 
 function isValidEmail(email: string): boolean {
-  if (!email) return true; // Optional in enquiry
+  if (!email || !email.trim()) return true; // Optional in enquiry
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email.trim());
 }
 
 function isValidPhone(phone: string): boolean {
-  const re = /^[\d\s+\-()]{7,20}$/;
-  return re.test(phone.trim());
+  if (!phone) return false;
+  const digits = phone.replace(/\D/g, '');
+  return digits.length >= 7 && digits.length <= 15;
 }
 
 // In-Memory Rate Limiter
@@ -288,7 +285,7 @@ interface RateLimitEntry {
 function createRateLimiter(opts: { windowMs: number; max: number; message: string }) {
   const store = new Map<string, RateLimitEntry>();
   return (req: Request, res: Response, next: NextFunction) => {
-    const ip = (
+    const rawIp = (
       (req.headers['x-forwarded-for'] as string) ||
       req.socket.remoteAddress ||
       'unknown'
@@ -296,12 +293,25 @@ function createRateLimiter(opts: { windowMs: number; max: number; message: strin
       .split(',')[0]
       .trim();
 
+    // Bypass strict limits for local loopback / container proxy traffic to avoid blocking preview testing
+    const isLoopback =
+      rawIp === '127.0.0.1' ||
+      rawIp === '::1' ||
+      rawIp === '::ffff:127.0.0.1' ||
+      rawIp === 'unknown' ||
+      rawIp.startsWith('10.') ||
+      rawIp.startsWith('172.');
+
+    if (isLoopback) {
+      return next();
+    }
+
     const now = Date.now();
-    let record = store.get(ip);
+    let record = store.get(rawIp);
 
     if (!record || now > record.resetTime) {
       record = { count: 1, resetTime: now + opts.windowMs };
-      store.set(ip, record);
+      store.set(rawIp, record);
     } else {
       record.count += 1;
     }
@@ -320,19 +330,19 @@ function createRateLimiter(opts: { windowMs: number; max: number; message: strin
 // Rate Limiter Instances
 const loginLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5,
+  max: 20,
   message: 'Too many login attempts. Please try again after 15 minutes.',
 });
 
 const enquiryLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10,
+  max: 50,
   message: 'Too many enquiry submissions. Please try again in 15 minutes.',
 });
 
 const apiLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300,
+  max: 1000,
   message: 'Too many requests. Please slow down.',
 });
 

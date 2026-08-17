@@ -14,7 +14,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, onNavigate }) =>
   const proprietorName = settings.proprietorName || 'Mr. Ravindra VD';
   const proprietorTitle = settings.proprietorTitle || 'Proprietor & Managing Director';
   const proprietorPhone = settings.proprietorPhone || settings.phone1 || '+91 93434 78096';
-  const proprietorEmail = settings.proprietorEmail || settings.email || 'sales@jayadevaservices.com';
+  const proprietorEmail = settings.proprietorEmail || settings.email || 'jayadevtech1@gmail.com';
   const proprietorBio = settings.proprietorBio || 'With over 20+ years of industrial machinery expertise, Mr. Ravindra VD leads Jayadeva Sales & Services as Karnataka\'s leading authorized sales and technical service center for Sunshine Computer Embroidery and Shunfa Industrial Sewing Machines.';
   const proprietorPhoto = settings.proprietorPhotoUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80';
 
