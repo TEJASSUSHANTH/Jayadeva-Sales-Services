@@ -209,6 +209,7 @@ export default function App() {
         <EnquiryModal
           product={enquiryProduct}
           onClose={() => setShowEnquiryModal(false)}
+          settings={settings}
         />
       )}
     </div>

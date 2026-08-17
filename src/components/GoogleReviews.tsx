@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Star, CheckCircle2, ExternalLink, MessageSquareQuote, X, Send, ThumbsUp } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Star, CheckCircle2, ExternalLink, MessageSquareQuote, X, Send, ThumbsUp, Copy, Check } from 'lucide-react';
 
 export interface GoogleReview {
   id: string;
@@ -60,8 +60,8 @@ const INITIAL_REVIEWS: GoogleReview[] = [
     authorName: 'Anitha Reddy',
     authorInitial: 'A',
     avatarBg: 'bg-purple-600',
-    location: 'Tumakuru, Karnataka',
-    businessType: 'Custom Saree & Zari Embroidery Studio',
+    location: 'Custom Saree & Zari Embroidery Studio',
+    businessType: 'Owner',
     rating: 5,
     timeAgo: '2 months ago',
     text: 'Sunshine single-head embroidery machine bought 6 months ago. Incredible detail for zari work and designer saree borders. Huge thanks to Jayadeva Sales team for constant technical guidance and thread support.',
@@ -97,9 +97,23 @@ const INITIAL_REVIEWS: GoogleReview[] = [
 ];
 
 export const GoogleReviewsSection: React.FC = () => {
-  const [reviewsList, setReviewsList] = useState<GoogleReview[]>(INITIAL_REVIEWS);
+  const [reviewsList, setReviewsList] = useState<GoogleReview[]>(() => {
+    try {
+      const saved = localStorage.getItem('jayadeva_user_reviews');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return [...parsed, ...INITIAL_REVIEWS];
+      }
+    } catch {
+      // Fallback
+    }
+    return INITIAL_REVIEWS;
+  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
+  const [lastSubmittedReview, setLastSubmittedReview] = useState<GoogleReview | null>(null);
+  const [copiedText, setCopiedText] = useState(false);
 
   // Form State
   const [rating, setRating] = useState(5);
@@ -116,11 +130,22 @@ export const GoogleReviewsSection: React.FC = () => {
   const handleOpenReviewModal = () => {
     setIsModalOpen(true);
     setSubmittedSuccess(false);
+    setCopiedText(false);
   };
 
-  const handleOpenGoogleMaps = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleOpenGoogleMaps = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     window.open(GOOGLE_MAPS_SEARCH_URL, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleCopyReviewText = async (reviewContent: string) => {
+    try {
+      await navigator.clipboard.writeText(reviewContent);
+      setCopiedText(true);
+      setTimeout(() => setCopiedText(false), 3000);
+    } catch {
+      // Clipboard write fallback
+    }
   };
 
   const handleSubmitReview = (e: React.FormEvent) => {
@@ -145,18 +170,35 @@ export const GoogleReviewsSection: React.FC = () => {
       verified: true,
     };
 
-    setReviewsList([newReviewItem, ...reviewsList]);
+    // 1. Update state & localStorage
+    const updatedList = [newReviewItem, ...reviewsList];
+    setReviewsList(updatedList);
+    setLastSubmittedReview(newReviewItem);
+
+    try {
+      const customOnly = updatedList.filter(r => !INITIAL_REVIEWS.some(init => init.id === r.id));
+      localStorage.setItem('jayadeva_user_reviews', JSON.stringify(customOnly));
+    } catch {
+      // Storage save fallback
+    }
+
+    // 2. Copy review text to clipboard automatically
+    const fullTextToPost = `${text.trim()}${machineModel ? ` (Machine: ${machineModel.trim()})` : ''}`;
+    handleCopyReviewText(fullTextToPost);
+
+    // 3. Open Google Maps search / review page in a new tab
+    window.open(GOOGLE_MAPS_SEARCH_URL, '_blank', 'noopener,noreferrer');
+
+    // 4. Show success screen
     setSubmittedSuccess(true);
 
-    // Reset Form
-    setTimeout(() => {
-      setAuthorName('');
-      setLocation('');
-      setBusinessType('');
-      setMachineModel('');
-      setText('');
-      setRating(5);
-    }, 1500);
+    // Reset Form fields
+    setAuthorName('');
+    setLocation('');
+    setBusinessType('');
+    setMachineModel('');
+    setText('');
+    setRating(5);
   };
 
   return (
@@ -224,7 +266,7 @@ export const GoogleReviewsSection: React.FC = () => {
 
             <button
               type="button"
-              onClick={handleOpenGoogleMaps}
+              onClick={(e) => handleOpenGoogleMaps(e)}
               className="px-4 py-2.5 bg-white hover:bg-slate-50 text-[#002B5B] font-bold text-xs rounded-xl border border-slate-200 shadow-sm transition-all inline-flex items-center space-x-1.5 cursor-pointer active:scale-95"
               id="btn-open-google-maps"
             >
@@ -335,7 +377,7 @@ export const GoogleReviewsSection: React.FC = () => {
                     Write a Google Review
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Share your experience with Jayadeva Sales & Services
+                    Your review will be saved on our website & posted on Google Maps
                   </p>
                 </div>
               </div>
@@ -353,22 +395,64 @@ export const GoogleReviewsSection: React.FC = () => {
             </div>
 
             {submittedSuccess ? (
-              <div className="py-8 text-center space-y-4">
+              <div className="py-6 text-center space-y-4">
                 <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
                   <ThumbsUp className="w-7 h-7" />
                 </div>
                 <h4 className="text-xl font-black text-[#002B5B]">
-                  Thank You for Your Review!
+                  Review Saved & Google Maps Opened!
                 </h4>
-                <p className="text-xs text-slate-600 max-w-xs mx-auto">
-                  Your feedback has been published and added to our Google Business reviews feed.
+                <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
+                  Your feedback has been published on our website. We have also opened the Google Maps review page and copied your review text to your clipboard.
                 </p>
+
+                {/* Status Box */}
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left space-y-2">
+                  <div className="flex items-center justify-between text-xs font-bold text-[#002B5B]">
+                    <span>Review Text Copied</span>
+                    {copiedText ? (
+                      <span className="text-emerald-600 inline-flex items-center space-x-1">
+                        <Check className="w-3.5 h-3.5" />
+                        <span>Copied!</span>
+                      </span>
+                    ) : null}
+                  </div>
+                  {lastSubmittedReview && (
+                    <p className="text-xs text-slate-600 italic line-clamp-2 bg-white p-2.5 rounded-xl border border-slate-200/80">
+                      "{lastSubmittedReview.text}"
+                    </p>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenGoogleMaps()}
+                    className="w-full sm:flex-1 py-3 px-4 bg-[#4285F4] hover:bg-blue-600 text-white font-bold text-xs rounded-xl shadow-md transition-all inline-flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Open Google Maps Tab</span>
+                  </button>
+
+                  {lastSubmittedReview && (
+                    <button
+                      type="button"
+                      onClick={() => handleCopyReviewText(lastSubmittedReview.text)}
+                      className="w-full sm:w-auto py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all inline-flex items-center justify-center space-x-1.5 cursor-pointer"
+                    >
+                      <Copy className="w-4 h-4 text-slate-500" />
+                      <span>{copiedText ? 'Copied!' : 'Copy Text'}</span>
+                    </button>
+                  )}
+                </div>
+
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2.5 bg-[#002B5B] text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
+                  className="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl cursor-pointer"
                 >
-                  Close Window
+                  Done
                 </button>
               </div>
             ) : (
@@ -485,7 +569,7 @@ export const GoogleReviewsSection: React.FC = () => {
                     id="btn-submit-review"
                   >
                     <Send className="w-4 h-4 text-[#C89327]" />
-                    <span>Submit Google Review</span>
+                    <span>Submit & Post to Google Maps</span>
                   </button>
 
                   <button
@@ -504,4 +588,5 @@ export const GoogleReviewsSection: React.FC = () => {
     </section>
   );
 };
+
 

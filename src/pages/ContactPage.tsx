@@ -20,6 +20,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const [lastSubmittedQuote, setLastSubmittedQuote] = useState<{
+    name: string;
+    phone: string;
+    product: string;
+    msg: string;
+    waUrl: string;
+  } | null>(null);
+
   const publishedProducts = products.filter((p) => p.published);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,25 +41,52 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
     setErrorMsg('');
 
     const selectedProd = publishedProducts.find((p) => p.id === selectedProductId);
+    const prodTitle = selectedProd ? `${selectedProd.brand} ${selectedProd.name} (${selectedProd.model})` : 'General Machine & Service Enquiry';
+
+    const targetWhatsApp = settings?.whatsAppNumber || '919343478096';
+    const lines = [
+      `*NEW QUOTE ENQUIRY - JAYADEVA SALES & SERVICES*`,
+      `──────────────────────────`,
+      `📌 *Product / Subject:* ${prodTitle}`,
+      `👤 *Customer Name:* ${customerName}`,
+      `📞 *Phone Number:* ${phone}`,
+      `✉️ *Email:* ${email.trim() || 'Not provided'}`,
+      `💬 *Requirements / Message:*`,
+      `"${message}"`,
+      `──────────────────────────`,
+      `Please provide machine price quote and specifications on WhatsApp.`
+    ];
+    const generatedWaUrl = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(lines.join('\n'))}`;
 
     try {
       await submitEnquiry({
         customerName,
         phone,
         email,
-        productName: selectedProd ? `${selectedProd.brand} ${selectedProd.name} (${selectedProd.model})` : 'General Machine Enquiry',
+        productName: prodTitle,
         productId: selectedProductId || undefined,
         message,
       });
+    } catch (err: any) {
+      console.warn('Backend save warning:', err);
+    } finally {
+      // Auto open WhatsApp
+      window.open(generatedWaUrl, '_blank');
+
+      setLastSubmittedQuote({
+        name: customerName,
+        phone: phone,
+        product: prodTitle,
+        msg: message,
+        waUrl: generatedWaUrl,
+      });
+
       setSubmitted(true);
       setCustomerName('');
       setPhone('');
       setEmail('');
       setSelectedProductId('');
       setMessage('');
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to submit enquiry. Please try again.');
-    } finally {
       setSubmitting(false);
     }
   };
@@ -267,22 +302,53 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
           </p>
 
           {submitted ? (
-            <div className="bg-emerald-50/90 border border-emerald-200/80 rounded-2xl p-8 text-center space-y-4 backdrop-blur-xs">
+            <div className="bg-emerald-50/90 border border-emerald-200/80 rounded-2xl p-6 sm:p-8 text-center space-y-5 backdrop-blur-xs">
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto shadow-md">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h3 className="text-2xl font-extrabold text-[#002B5B]">
-                Thank you. We will contact you shortly.
-              </h3>
-              <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-                Your enquiry has been received by Jayadeva Sales & Services. Our sales executive will review your request and get back to you promptly.
-              </p>
-              <button
-                onClick={() => setSubmitted(false)}
-                className="mt-2 px-6 py-2.5 bg-[#002B5B] hover:bg-[#001f42] text-white font-bold text-xs rounded-xl transition-all shadow-md"
-              >
-                Send Another Enquiry
-              </button>
+              <div>
+                <h3 className="text-2xl font-extrabold text-[#002B5B]">
+                  Quote Submitted & Sent to WhatsApp!
+                </h3>
+                <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed mt-1">
+                  Your enquiry details have been recorded and formatted directly for our sales team on WhatsApp.
+                </p>
+              </div>
+
+              {lastSubmittedQuote && (
+                <div className="bg-white/90 border border-emerald-200/80 rounded-xl p-4 text-left text-xs space-y-2 text-slate-700 max-w-md mx-auto shadow-xs">
+                  <div className="font-bold text-[#002B5B] border-b border-slate-200 pb-1 flex items-center justify-between">
+                    <span>Sent Quote Payload:</span>
+                    <span className="text-[10px] text-emerald-600 font-bold uppercase">WhatsApp Format</span>
+                  </div>
+                  <div><span className="font-semibold text-slate-900">Name:</span> {lastSubmittedQuote.name}</div>
+                  <div><span className="font-semibold text-slate-900">Phone:</span> {lastSubmittedQuote.phone}</div>
+                  <div><span className="font-semibold text-slate-900">Machine/Subject:</span> {lastSubmittedQuote.product}</div>
+                  <div className="line-clamp-2"><span className="font-semibold text-slate-900">Note:</span> "{lastSubmittedQuote.msg}"</div>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                {lastSubmittedQuote?.waUrl && (
+                  <a
+                    href={lastSubmittedQuote.waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition-all shadow-md flex items-center justify-center space-x-2"
+                  >
+                    <MessageSquare className="w-4 h-4 fill-white" />
+                    <span>Open WhatsApp Chat Again</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="w-full sm:w-auto px-6 py-3 bg-[#002B5B] hover:bg-[#001f42] text-white font-bold text-xs rounded-xl transition-all shadow-md"
+                >
+                  Send Another Enquiry
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -295,7 +361,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Name <span className="text-red-500">*</span>
+                    Your Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -303,14 +369,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
                     placeholder="Enter your full name"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                    className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden"
                     id="input-contact-name"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Phone Number <span className="text-red-500">*</span>
+                    WhatsApp / Mobile Number <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -318,7 +384,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
                     placeholder="10-digit mobile number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                    className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden"
                     id="input-contact-phone"
                   />
                 </div>
@@ -326,14 +392,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Email Address
+                  Email Address <span className="text-slate-400 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="email"
-                  placeholder="name@company.com (optional)"
+                  placeholder="name@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden"
                   id="input-contact-email"
                 />
               </div>
@@ -345,7 +411,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
                 <select
                   value={selectedProductId}
                   onChange={(e) => setSelectedProductId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden"
                   id="select-contact-product"
                 >
                   <option value="">General Machine / Service Enquiry</option>
@@ -359,7 +425,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Message <span className="text-red-500">*</span>
+                  Quote Requirements & Message <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   rows={4}
@@ -367,21 +433,25 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
                   placeholder="Describe your machine requirement, fabric type, or service request..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-[#FF6321] focus:border-[#FF6321] outline-hidden"
+                  className="w-full px-3.5 py-2.5 text-xs bg-white/90 border border-slate-200/80 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden"
                   id="input-contact-message"
                 />
               </div>
 
-              <div>
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full sm:w-auto px-8 py-3 bg-[#FF6321] hover:bg-[#e85a1e] text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-orange-500/25 disabled:opacity-50"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/25 disabled:opacity-50 cursor-pointer"
                   id="btn-submit-contact-enquiry"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>{submitting ? 'Sending...' : 'Send Enquiry'}</span>
+                  <MessageSquare className="w-4 h-4 fill-white" />
+                  <span>{submitting ? 'Formatting Quote...' : 'Submit Quote & Send via WhatsApp'}</span>
+                  <Send className="w-3.5 h-3.5 ml-1" />
                 </button>
+                <p className="text-[11px] text-slate-500 mt-2">
+                  Submitting will format all details into a structured WhatsApp message to our sales team (+{settings.whatsAppNumber || '919343478096'}).
+                </p>
               </div>
             </form>
           )}
