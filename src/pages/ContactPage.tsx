@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send, CheckCircle2, Globe } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, MessageSquare, Send, CheckCircle2, Globe, Navigation, ExternalLink, Copy, Check } from 'lucide-react';
 import { WebsiteSettings, Product } from '../types';
 import { submitEnquiry } from '../lib/api';
 
@@ -15,6 +15,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
   const [selectedProductId, setSelectedProductId] = useState('');
   const [message, setMessage] = useState('');
 
+  const [copied, setCopied] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -138,25 +139,28 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
           </div>
 
           {/* Proprietor Direct Contact Card */}
-          <div className="bg-gradient-to-br from-[#002B5B] to-[#001733] text-white rounded-2xl p-5 shadow-lg space-y-3 border border-amber-400/30">
-            <div className="flex items-center space-x-3.5">
-              <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-amber-400/80 bg-slate-800 shrink-0">
+          <div className="bg-gradient-to-br from-[#002B5B] to-[#001733] text-white rounded-2xl p-5 shadow-lg space-y-4 border border-amber-400/30">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-amber-400/80 shadow-xl bg-slate-800 shrink-0">
                 <img
                   src={settings.proprietorPhotoUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'}
                   alt={settings.proprietorName || 'Mr. Ravindra VD'}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                  Proprietor Contact
+              <div className="text-center sm:text-left">
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block mb-0.5">
+                  Proprietor Direct Contact
                 </span>
-                <h3 className="text-base font-extrabold text-white">
+                <h3 className="text-lg font-extrabold text-white">
                   {settings.proprietorName || 'Mr. Ravindra VD'}
                 </h3>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-300 font-medium">
                   {settings.proprietorTitle || 'Proprietor & Managing Director'}
+                </p>
+                <p className="text-[11px] text-slate-300 mt-2 line-clamp-2 italic">
+                  "{settings.proprietorBio || 'Karnataka authorized sales and service dealer.'}"
                 </p>
               </div>
             </div>
@@ -179,16 +183,77 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products }) 
             </div>
           </div>
 
-          {/* Map Embed Container */}
-          <div className="bg-white/80 rounded-2xl border border-white/80 overflow-hidden shadow-lg h-64 backdrop-blur-md">
-            <iframe
-              title="Jayadeva Sales & Services Location"
-              src={settings.googleMapsEmbedUrl}
-              className="w-full h-full border-0"
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+          {/* Interactive Google Map & Directions Card */}
+          <div className="bg-white/80 rounded-2xl border border-white/80 overflow-hidden shadow-lg backdrop-blur-md flex flex-col">
+            <div className="p-4 bg-[#002B5B] text-white flex items-center justify-between gap-3">
+              <div className="flex items-center space-x-2.5">
+                <MapPin className="w-5 h-5 text-[#FF6321] shrink-0" />
+                <div>
+                  <h3 className="font-extrabold text-sm text-white">Showroom & Workshop Location</h3>
+                  <p className="text-[11px] text-slate-300 line-clamp-1">
+                    {settings.address}, {settings.city}, {settings.state} - {settings.pincode}
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  `Jayadeva Sales & Services ${settings.address} ${settings.city}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 bg-[#FF6321] hover:bg-orange-600 text-white font-bold text-xs rounded-xl flex items-center space-x-1.5 transition-all shrink-0 shadow-md"
+              >
+                <Navigation className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Get Directions</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+
+            <div className="relative w-full h-72 bg-slate-100">
+              <iframe
+                title="Jayadeva Sales & Services Location"
+                src={
+                  settings.googleMapsEmbedUrl ||
+                  `https://maps.google.com/maps?q=${encodeURIComponent(
+                    `Jayadeva Sales & Services, ${settings.address}, ${settings.city}, ${settings.state} ${settings.pincode}`
+                  )}&t=&z=16&ie=UTF8&iwloc=&output=embed`
+                }
+                className="w-full h-full border-0"
+                allowFullScreen={true}
+                loading="lazy"
+              ></iframe>
+            </div>
+
+            <div className="p-3.5 bg-slate-50/90 border-t border-slate-200/80 flex items-center justify-between gap-2 text-xs">
+              <span className="text-slate-600 text-[11px] font-medium flex items-center space-x-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Near Agrahara Dasarahalli Bus Stop, Magadi Main Rd</span>
+              </span>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const fullAddr = `${settings.address}, ${settings.city}, ${settings.state} - ${settings.pincode}`;
+                  navigator.clipboard.writeText(fullAddr);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="px-3 py-1 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-bold rounded-lg flex items-center space-x-1 transition-all shadow-2xs"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-emerald-700">Copied Address!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Copy Address</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 

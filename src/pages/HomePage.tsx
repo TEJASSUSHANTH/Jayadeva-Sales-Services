@@ -3,6 +3,7 @@ import { ArrowRight, ShieldCheck, Wrench, Settings, ChevronRight, Award, Headpho
 import { Product, WebsiteSettings } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { GoogleReviewsSection } from '../components/GoogleReviews';
+import defaultProprietorPhoto from '../assets/images/regenerated_image_1786948309442.jpg';
 
 interface HomePageProps {
   products: Product[];
@@ -302,27 +303,27 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/80 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Proprietor Card */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-[#002B5B] to-[#001733] text-white rounded-2xl p-6 shadow-lg space-y-4 border border-amber-400/30 relative overflow-hidden">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-800 shrink-0">
-                <img
-                  src={settings.proprietorPhotoUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'}
-                  alt={settings.proprietorName || 'Mr. Ravindra VD'}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
-                />
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#002B5B] to-[#001733] text-white rounded-2xl p-6 shadow-xl space-y-4 border border-amber-400/30 relative overflow-hidden flex flex-col">
+            {/* Large Proprietor Photo Frame */}
+            <div className="relative group w-full h-60 sm:h-72 rounded-xl overflow-hidden border-2 border-amber-400/80 shadow-2xl bg-slate-800 shrink-0">
+              <img
+                src={settings.proprietorPhotoUrl || defaultProprietorPhoto}
+                alt={settings.proprietorName || 'Mr. Ravindra VD'}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-amber-600 text-amber-950 font-black text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md backdrop-blur-xs">
+                Proprietor & Founder
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                  Proprietor & Founder
-                </span>
-                <h4 className="text-lg font-black text-white">
-                  {settings.proprietorName || 'Mr. Ravindra VD'}
-                </h4>
-                <p className="text-xs text-slate-300">
-                  {settings.proprietorTitle || 'Managing Director'}
-                </p>
-              </div>
+            </div>
+
+            <div>
+              <h4 className="text-xl font-black text-white">
+                {settings.proprietorName || 'Mr. Ravindra VD'}
+              </h4>
+              <p className="text-xs font-bold text-amber-400">
+                {settings.proprietorTitle || 'Managing Director'}
+              </p>
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed italic">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Award, ShieldCheck, Wrench, CheckCircle2, Phone, Mail, MessageSquare, MapPin, Building2, User, Eye, X } from 'lucide-react';
 import { WebsiteSettings } from '../types';
 import { GoogleReviewsSection } from '../components/GoogleReviews';
+import defaultProprietorPhoto from '../assets/images/regenerated_image_1786948309442.jpg';
 
 interface AboutPageProps {
   settings: WebsiteSettings;
@@ -16,7 +17,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, onNavigate }) =>
   const proprietorPhone = settings.proprietorPhone || settings.phone1 || '+91 93434 78096';
   const proprietorEmail = settings.proprietorEmail || settings.email || 'jayadevtech1@gmail.com';
   const proprietorBio = settings.proprietorBio || 'With over 20+ years of industrial machinery expertise, Mr. Ravindra VD leads Jayadeva Sales & Services as Karnataka\'s leading authorized sales and technical service center for Sunshine Computer Embroidery and Shunfa Industrial Sewing Machines.';
-  const proprietorPhoto = settings.proprietorPhotoUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80';
+  const proprietorPhoto = settings.proprietorPhotoUrl || defaultProprietorPhoto;
 
   const defaultShopPhotos = [
     'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
@@ -114,24 +115,24 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, onNavigate }) =>
 
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           {/* Proprietor Photo */}
-          <div className="md:col-span-4 flex flex-col items-center">
-            <div className="relative group">
-              <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl overflow-hidden border-4 border-amber-400/80 shadow-2xl bg-slate-800">
+          <div className="md:col-span-5 flex flex-col items-center">
+            <div className="relative group w-full max-w-xs sm:max-w-sm">
+              <div className="w-full h-72 sm:h-80 lg:h-96 rounded-3xl overflow-hidden border-4 border-amber-400 shadow-2xl bg-slate-800">
                 <img
                   src={proprietorPhoto}
                   alt={proprietorName}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-amber-500 text-amber-950 font-black text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md whitespace-nowrap">
-                Proprietor Profile
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-amber-500 text-amber-950 font-black text-xs uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                Proprietor & Managing Director
               </div>
             </div>
           </div>
 
           {/* Proprietor Information */}
-          <div className="md:col-span-8 space-y-4 text-center md:text-left">
+          <div className="md:col-span-7 space-y-4 text-center md:text-left">
             <div>
               <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold text-amber-300 mb-2">
                 <User className="w-3.5 h-3.5" />
