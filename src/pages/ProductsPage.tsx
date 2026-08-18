@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Search, Filter, X, Truck } from 'lucide-react';
 import { Product, BrandType, CategoryType } from '../types';
 import { ProductCard } from '../components/ProductCard';
+import { MachineAttachmentsShowcase } from '../components/MachineAttachmentsShowcase';
 
 interface ProductsPageProps {
   products: Product[];
@@ -206,6 +207,11 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
           </button>
         </div>
       )}
+
+      {/* EMBROIDERY HOOPS, FRAMES & SPECIALIZED ATTACHMENTS */}
+      <div className="-mx-4 sm:-mx-6 lg:-mx-8 mt-16">
+        <MachineAttachmentsShowcase />
+      </div>
     </div>
   );
 };

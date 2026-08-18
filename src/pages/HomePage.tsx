@@ -3,6 +3,7 @@ import { ArrowRight, ShieldCheck, Wrench, Settings, ChevronRight, Award, Headpho
 import { Product, WebsiteSettings } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { GoogleReviewsSection } from '../components/GoogleReviews';
+import { MachineAttachmentsShowcase } from '../components/MachineAttachmentsShowcase';
 import defaultProprietorPhoto from '../assets/images/regenerated_image_1786948309442.jpg';
 
 interface HomePageProps {
@@ -228,6 +229,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           ))}
         </div>
       </section>
+
+      {/* EMBROIDERY FRAMES, HOOPS & SPECIALIZED ATTACHMENTS */}
+      <MachineAttachmentsShowcase />
 
       {/* WHY CHOOSE JAYADEVA / SERVICES SUMMARY */}
       <section className="py-12">

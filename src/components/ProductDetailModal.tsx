@@ -221,6 +221,84 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               </div>
             </div>
           )}
+
+          {/* Standard Included Hoops & Optional Attachments */}
+          {product.category === 'Embroidery Machines' && (
+            <div className="border-t border-slate-200/80 pt-6 bg-slate-50/80 -mx-6 p-6 border-b rounded-b-2xl">
+              <div className="flex items-center space-x-2 mb-3">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                  Accessories Ecosystem
+                </span>
+                <h3 className="text-base font-extrabold text-[#002B5B]">
+                  Compatible Hoops, Frames & Special Devices
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                {/* Hoops List */}
+                <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                  <div className="font-extrabold text-[#002B5B] text-xs flex items-center justify-between">
+                    <span>Standard & Border Hoops (6 Sizes)</span>
+                    <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Included/Available</span>
+                  </div>
+                  <ul className="space-y-1 text-slate-600">
+                    <li className="flex items-center justify-between py-1 border-b border-slate-100">
+                      <span>• 90 mm Round Hoop</span>
+                      <span className="font-mono text-[11px] text-slate-500">3.5" Pocket</span>
+                    </li>
+                    <li className="flex items-center justify-between py-1 border-b border-slate-100">
+                      <span>• 128 mm Round Hoop</span>
+                      <span className="font-mono text-[11px] text-slate-500">5.0" Chest</span>
+                    </li>
+                    <li className="flex items-center justify-between py-1 border-b border-slate-100">
+                      <span>• 168 mm Round Hoop</span>
+                      <span className="font-mono text-[11px] text-slate-500">6.6" T-Shirt</span>
+                    </li>
+                    <li className="flex items-center justify-between py-1 border-b border-slate-100">
+                      <span>• 208 mm Round Hoop</span>
+                      <span className="font-mono text-[11px] text-slate-500">8.2" Jacket Back</span>
+                    </li>
+                    <li className="flex items-center justify-between py-1 border-b border-slate-100">
+                      <span>• 295 x 295 mm Square Frame</span>
+                      <span className="font-mono text-[11px] text-slate-500">11.6" Motif</span>
+                    </li>
+                    <li className="flex items-center justify-between py-1">
+                      <span>• 550 x 360 mm Large Border Hoop</span>
+                      <span className="font-mono text-[11px] text-slate-500">21.6" Saree Palla</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Optional Attachments List */}
+                <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                  <div className="font-extrabold text-[#002B5B] text-xs flex items-center justify-between">
+                    <span>Specialized Garment Devices</span>
+                    <span className="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">Optional Attachments</span>
+                  </div>
+                  <ul className="space-y-1 text-slate-600">
+                    <li className="py-1 border-b border-slate-100">
+                      <span className="font-bold text-slate-800">• Shoes Embroidery Device:</span> Sneakers & footwear clamp
+                    </li>
+                    <li className="py-1 border-b border-slate-100">
+                      <span className="font-bold text-slate-800">• Sock Frame Attachment:</span> 3-Socket continuous sock holder
+                    </li>
+                    <li className="py-1 border-b border-slate-100">
+                      <span className="font-bold text-slate-800">• Cap Driver System:</span> 270° Cap driver & gauge frame
+                    </li>
+                    <li className="py-1 border-b border-slate-100">
+                      <span className="font-bold text-slate-800">• Simple Towel Device:</span> Terry cloth & towel loop stitcher
+                    </li>
+                    <li className="py-1 border-b border-slate-100">
+                      <span className="font-bold text-slate-800">• Beads & Cording Device:</span> Glass bead & rope stitching
+                    </li>
+                    <li className="py-1">
+                      <span className="font-bold text-slate-800">• Twin Sequin / Sequence:</span> Single/Dual sequin dispenser
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
