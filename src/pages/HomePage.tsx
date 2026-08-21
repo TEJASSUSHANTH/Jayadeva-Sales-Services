@@ -4,6 +4,7 @@ import { Product, WebsiteSettings } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { GoogleReviewsSection } from '../components/GoogleReviews';
 import { MachineAttachmentsShowcase } from '../components/MachineAttachmentsShowcase';
+import { IndiaMartTrustSeal } from '../components/IndiaMartTrustSeal';
 import defaultProprietorPhoto from '../assets/images/regenerated_image_1786948309442.jpg';
 
 interface HomePageProps {
@@ -298,6 +299,11 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
           </div>
         </div>
+      </section>
+
+      {/* INDIAMART TRUSTSEAL CERTIFICATION BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <IndiaMartTrustSeal variant="banner" />
       </section>
 
       {/* GOOGLE REVIEWS SECTION */}

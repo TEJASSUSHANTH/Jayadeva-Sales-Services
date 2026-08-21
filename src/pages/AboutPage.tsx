@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Award, ShieldCheck, Wrench, CheckCircle2, Phone, Mail, MessageSquare, MapPin, Building2, User, Eye, X } from 'lucide-react';
 import { WebsiteSettings } from '../types';
 import { GoogleReviewsSection } from '../components/GoogleReviews';
+import { IndiaMartTrustSeal } from '../components/IndiaMartTrustSeal';
 import defaultProprietorPhoto from '../assets/images/regenerated_image_1786948309442.jpg';
 
 interface AboutPageProps {
@@ -84,6 +85,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, onNavigate }) =>
               <div className="font-extrabold text-[#002B5B] text-sm">Shunfa Dealer</div>
               <div className="text-slate-600">Industrial Sewing Sales & Support</div>
             </div>
+          </div>
+
+          {/* IndiaMART TrustSEAL Card */}
+          <div className="pt-2">
+            <IndiaMartTrustSeal variant="card" />
           </div>
         </div>
 

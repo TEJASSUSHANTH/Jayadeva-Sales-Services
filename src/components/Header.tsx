@@ -49,9 +49,13 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="hidden md:inline">| {settings.workingHours}</span>
           </div>
           <div className="flex items-center space-x-3 text-slate-200 text-xs font-semibold">
-            <span className="bg-[#C89327]/20 text-amber-200 px-2.5 py-0.5 rounded-md border border-[#C89327]/40 flex items-center space-x-1.5 text-[11px] font-medium tracking-wide">
+            <span className="bg-amber-400/20 text-amber-200 px-2 py-0.5 rounded-md border border-amber-400/30 flex items-center space-x-1 text-[11px] font-bold">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse inline-block" />
+              <span>IndiaMART TrustSEAL Certified</span>
+            </span>
+            <span className="hidden xl:inline bg-[#C89327]/20 text-amber-200 px-2.5 py-0.5 rounded-md border border-[#C89327]/40 flex items-center space-x-1.5 text-[11px] font-medium tracking-wide">
               <Truck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span>Pan-India Delivery Available (Transportation Extra)</span>
+              <span>Pan-India Delivery</span>
             </span>
             <span className="hidden lg:inline font-bold text-[#FF6321]">Sunshine</span>
             <span className="hidden lg:inline">•</span>

@@ -19,9 +19,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, settings }) => {
             <p className="text-xs text-slate-400 leading-relaxed">
               Authorized sales and technical service provider for Sunshine computer embroidery machines and Shunfa high-speed industrial sewing machines.
             </p>
-            <div className="flex items-center space-x-2 pt-1 text-xs text-slate-300">
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-slate-300">
               <span className="px-2.5 py-0.5 bg-white/10 rounded-full text-[#FF6321] font-bold border border-white/10">Sunshine</span>
               <span className="px-2.5 py-0.5 bg-white/10 rounded-full text-[#008080] font-bold border border-white/10">Shunfa</span>
+            </div>
+            <div className="pt-2">
+              <div className="inline-flex items-center space-x-2 bg-amber-500/10 border border-amber-400/30 px-3 py-1.5 rounded-xl text-amber-300 text-xs font-bold">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span>IndiaMART TrustSEAL Certified</span>
+              </div>
             </div>
           </div>
 

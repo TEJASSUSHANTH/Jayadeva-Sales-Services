@@ -374,10 +374,10 @@ export const GoogleReviewsSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-[#002B5B]">
-                    Write a Google Review
+                    Write a Review
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Your review will be saved on our website & posted on Google Maps
+                    Your review will be published on our website. You can also paste it to Google Maps!
                   </p>
                 </div>
               </div>
@@ -395,65 +395,71 @@ export const GoogleReviewsSection: React.FC = () => {
             </div>
 
             {submittedSuccess ? (
-              <div className="py-6 text-center space-y-4">
+              <div className="py-4 text-center space-y-4">
                 <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
-                  <ThumbsUp className="w-7 h-7" />
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h4 className="text-xl font-black text-[#002B5B]">
-                  Review Saved & Google Maps Opened!
-                </h4>
-                <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
-                  Your feedback has been published on our website. We have also opened the Google Maps review page and copied your review text to your clipboard.
-                </p>
+                <div>
+                  <h4 className="text-xl font-black text-[#002B5B]">
+                    Published on Website!
+                  </h4>
+                  <p className="text-xs text-slate-600 max-w-sm mx-auto mt-1 leading-relaxed">
+                    Your review is now live on our website showcase.
+                  </p>
+                </div>
 
-                {/* Status Box */}
-                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left space-y-2">
-                  <div className="flex items-center justify-between text-xs font-bold text-[#002B5B]">
-                    <span>Review Text Copied</span>
-                    {copiedText ? (
-                      <span className="text-emerald-600 inline-flex items-center space-x-1">
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Copied!</span>
-                      </span>
-                    ) : null}
+                {/* Clear Google Maps Instructions Card */}
+                <div className="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-4 text-left space-y-3">
+                  <div className="flex items-center space-x-2 text-xs font-black text-[#002B5B]">
+                    <span className="bg-[#4285F4] text-white px-2 py-0.5 rounded text-[10px]">Google Maps</span>
+                    <span>To post directly on Google Maps:</span>
                   </div>
+
+                  <ol className="text-xs text-slate-700 space-y-2 list-decimal list-inside font-medium">
+                    <li className="leading-snug">
+                      <strong className="text-emerald-700 font-bold">Review Text Copied:</strong> Your review text is copied to your device clipboard.
+                    </li>
+                    <li className="leading-snug">
+                      Click <strong className="text-[#002B5B]">"Open Google Maps Page"</strong> below.
+                    </li>
+                    <li className="leading-snug">
+                      Paste (<span className="bg-white px-1.5 py-0.5 rounded border border-slate-300 font-mono text-[10px]">Ctrl+V</span> or Long Press) & submit on Google!
+                    </li>
+                  </ol>
+
                   {lastSubmittedReview && (
-                    <p className="text-xs text-slate-600 italic line-clamp-2 bg-white p-2.5 rounded-xl border border-slate-200/80">
-                      "{lastSubmittedReview.text}"
-                    </p>
+                    <div className="bg-white p-2.5 rounded-xl border border-amber-200 text-xs italic text-slate-600 flex items-start justify-between gap-2">
+                      <span className="line-clamp-2">"{lastSubmittedReview.text}"</span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyReviewText(lastSubmittedReview.text)}
+                        className="text-[10px] font-bold text-[#002B5B] hover:text-[#C89327] shrink-0 bg-slate-100 px-2 py-1 rounded"
+                      >
+                        {copiedText ? 'Copied!' : 'Copy'}
+                      </button>
+                    </div>
                   )}
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-center gap-3 pt-1">
                   <button
                     type="button"
                     onClick={() => handleOpenGoogleMaps()}
                     className="w-full sm:flex-1 py-3 px-4 bg-[#4285F4] hover:bg-blue-600 text-white font-bold text-xs rounded-xl shadow-md transition-all inline-flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    <span>Open Google Maps Tab</span>
+                    <span>Open Google Maps Page</span>
                   </button>
 
-                  {lastSubmittedReview && (
-                    <button
-                      type="button"
-                      onClick={() => handleCopyReviewText(lastSubmittedReview.text)}
-                      className="w-full sm:w-auto py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all inline-flex items-center justify-center space-x-1.5 cursor-pointer"
-                    >
-                      <Copy className="w-4 h-4 text-slate-500" />
-                      <span>{copiedText ? 'Copied!' : 'Copy Text'}</span>
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="w-full sm:w-auto py-3 px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl cursor-pointer"
+                  >
+                    Done
+                  </button>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl cursor-pointer"
-                >
-                  Done
-                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmitReview} className="space-y-4">
@@ -569,7 +575,7 @@ export const GoogleReviewsSection: React.FC = () => {
                     id="btn-submit-review"
                   >
                     <Send className="w-4 h-4 text-[#C89327]" />
-                    <span>Submit & Post to Google Maps</span>
+                    <span>Publish Review & Copy for Google</span>
                   </button>
 
                   <button
